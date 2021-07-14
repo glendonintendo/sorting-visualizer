@@ -1,6 +1,6 @@
 import { Flex, Button } from "@chakra-ui/react";
 
-export const Nav = ({ generateArrayBars }) => {
+const Nav = ({ generateArrayBars }) => {
   return (
     <Flex
       align="center"
@@ -14,3 +14,5 @@ export const Nav = ({ generateArrayBars }) => {
     </Flex>
   );
 };
+
+export default Nav;

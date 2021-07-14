@@ -1,6 +1,6 @@
 import { Flex, Box } from "@chakra-ui/react";
 
-export const Visualizer = ({ arrayBars }) => {
+const Visualizer = ({ arrayBars }) => {
   return (
     <Flex
       bg="tomato"
@@ -18,3 +18,5 @@ export const Visualizer = ({ arrayBars }) => {
     </Flex>
   );
 };
+
+export default Visualizer;

@@ -1,6 +1,6 @@
 import { Flex, Button } from "@chakra-ui/react";
 
-export const Controller = ({ stepForwardAnimation, playAnimations }) => {
+const Controller = ({ stepForwardAnimation, playAnimations }) => {
   return (
     <Flex justifyContent="space-between" w="80vw" mx="auto">
       <Button onClick={playAnimations}>Play</Button>
@@ -8,3 +8,5 @@ export const Controller = ({ stepForwardAnimation, playAnimations }) => {
     </Flex>
   );
 };
+
+export default Controller;
