@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { ThemeProvider, CSSReset } from "@chakra-ui/react";
 import Nav from "./components/Nav";
 import Visualizer from "./components/Visualizer";
 import Controller from "./components/Controller";
@@ -66,7 +65,7 @@ function App() {
     }
     currentAnimation.current = animations.current.length;
     setArrayBars(array);
-  }
+  };
 
   const playAnimations = () => {
     setIsPlaying(true);
@@ -74,7 +73,7 @@ function App() {
 
   const pauseAnimations = () => {
     setIsPlaying(false);
-  }
+  };
 
   useEffect(() => {
     generateArrayBars();
@@ -86,25 +85,22 @@ function App() {
 
       return () => clearTimeout(animationTimer);
     }
-  }, [isPlaying, arrayBars, stepForwardAnimation])
+  }, [isPlaying, arrayBars, stepForwardAnimation]);
 
   return (
-    <ThemeProvider>
-      <div>
-        <CSSReset />
-        <Nav generateArrayBars={generateArrayBars} />
-        <Visualizer arrayBars={arrayBars} />
-        <Controller
-          stepForwardAnimation={stepForwardAnimation}
-          playAnimations={playAnimations}
-          pauseAnimations={pauseAnimations}
-          stepBackwardAnimation={stepBackwardAnimation}
-          goToEnd={goToEnd}
-          goToStart={goToStart}
-          isPlaying={isPlaying}
-        />
-      </div>
-    </ThemeProvider>
+    <>
+      <Nav generateArrayBars={generateArrayBars} />
+      <Visualizer arrayBars={arrayBars} />
+      <Controller
+        stepForwardAnimation={stepForwardAnimation}
+        playAnimations={playAnimations}
+        pauseAnimations={pauseAnimations}
+        stepBackwardAnimation={stepBackwardAnimation}
+        goToEnd={goToEnd}
+        goToStart={goToStart}
+        isPlaying={isPlaying}
+      />
+    </>
   );
 }
 
