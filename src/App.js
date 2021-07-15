@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { ThemeProvider, CSSReset } from "@chakra-ui/react";
 import Nav from "./components/Nav";
 import Visualizer from "./components/Visualizer";
@@ -10,7 +10,7 @@ function App() {
   const [arrayBars, setArrayBars] = useState([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const animations = useRef([]);
-  const currentAnimation = useRef();
+  const currentAnimation = useRef(0);
 
   const generateArrayBars = () => {
     const array = [];
@@ -22,22 +22,59 @@ function App() {
     }
 
     setArrayBars(array);
+    setIsPlaying(false);
     animations.current = generateBubbleSortAnimations(array);
+    currentAnimation.current = 0;
   };
 
-  const stepForwardAnimation = () => {
-    if (currentAnimation.current === undefined) currentAnimation.current = 0;
-    else currentAnimation.current += 1;
+  const stepForwardAnimation = useCallback(() => {
+    if (currentAnimation.current >= animations.current.length) {
+      setIsPlaying(false);
+      return;
+    }
+    const [idx1, idx2] = animations.current[currentAnimation.current];
+    const array = [...arrayBars];
+    [array[idx1], array[idx2]] = [array[idx2], array[idx1]];
+    currentAnimation.current++;
+    setArrayBars(array);
+  }, [arrayBars]);
 
+  const stepBackwardAnimation = () => {
+    if (currentAnimation.current <= 0) return;
+    currentAnimation.current--;
     const [idx1, idx2] = animations.current[currentAnimation.current];
     const array = [...arrayBars];
     [array[idx1], array[idx2]] = [array[idx2], array[idx1]];
     setArrayBars(array);
   };
 
+  const goToStart = () => {
+    const array = [...arrayBars];
+    for (let i = currentAnimation.current - 1; i >= 0; i--) {
+      const [idx1, idx2] = animations.current[i];
+      [array[idx1], array[idx2]] = [array[idx2], array[idx1]];
+    }
+    currentAnimation.current = 0;
+    setArrayBars(array);
+  };
+
+  const goToEnd = () => {
+    const array = [...arrayBars];
+    for (let i = currentAnimation.current; i < animations.current.length; i++) {
+      const [idx1, idx2] = animations.current[i];
+      [array[idx1], array[idx2]] = [array[idx2], array[idx1]];
+    }
+    currentAnimation.current = animations.current.length;
+    setArrayBars(array);
+  }
+
   const playAnimations = () => {
     setIsPlaying(true);
   };
+
+  const pauseAnimations = () => {
+    setIsPlaying(false);
+  }
 
   useEffect(() => {
     generateArrayBars();
@@ -49,7 +86,7 @@ function App() {
 
       return () => clearTimeout(animationTimer);
     }
-  }, [isPlaying, arrayBars])
+  }, [isPlaying, arrayBars, stepForwardAnimation])
 
   return (
     <ThemeProvider>
@@ -60,6 +97,11 @@ function App() {
         <Controller
           stepForwardAnimation={stepForwardAnimation}
           playAnimations={playAnimations}
+          pauseAnimations={pauseAnimations}
+          stepBackwardAnimation={stepBackwardAnimation}
+          goToEnd={goToEnd}
+          goToStart={goToStart}
+          isPlaying={isPlaying}
         />
       </div>
     </ThemeProvider>
