@@ -10,7 +10,6 @@ const Nav = ({ generateArrayBars }) => {
       justifyContent="space-between"
     >
       <Button onClick={generateArrayBars}>Generate a new array!</Button>
-      <Button>Sort!</Button>
     </Flex>
   );
 };
