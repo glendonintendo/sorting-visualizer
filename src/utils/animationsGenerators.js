@@ -8,6 +8,7 @@ export const generateBubbleSortAnimations = (array) => {
 
   let swapped;
   for (let i = dupArray.length; i > 0; i--) {
+    swapped = false;
     for (let j = 0; j < i - 1; j++) {
       if (dupArray[j].barHeight > dupArray[j + 1].barHeight) {
         animations.push([j, j + 1]);
