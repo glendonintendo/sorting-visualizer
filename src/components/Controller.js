@@ -28,7 +28,13 @@ const Controller = ({
   );
 
   return (
-    <Flex justifyContent="space-between" w="25vw" mx="auto">
+    <Flex
+      justifyContent="space-between"
+      alignItems="center"
+      h="10vh"
+      w={{ base: "95vw", md: "60vw", lg: "25vw" }}
+      mx="auto"
+    >
       <Button onClick={goToStart}>
         <IoPlaySkipBack />
       </Button>
