@@ -8,12 +8,14 @@ import { generateBubbleSortAnimations } from "./utils/animationsGenerators";
 function App() {
   const [arrayBars, setArrayBars] = useState([]);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [arraySize, setArraySize] = useState(30);
+  const [animationSpeed, setAnimationSpeed] = useState(50);
   const animations = useRef([]);
   const currentAnimation = useRef(0);
 
   const generateArrayBars = () => {
     const array = [];
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < arraySize; i++) {
       array.push({
         barHeight: Math.floor(Math.random() * 96) + 5,
         key: i,
@@ -67,6 +69,14 @@ function App() {
     setArrayBars(array);
   };
 
+  const onArraySizeSliderChange = (value) => {
+    setArraySize(value);
+  };
+
+  const onAnimationSpeedSliderChange = (value) => {
+    setAnimationSpeed(200 - value);
+  };
+
   const playAnimations = () => {
     setIsPlaying(true);
   };
@@ -81,16 +91,26 @@ function App() {
 
   useEffect(() => {
     if (isPlaying) {
-      const animationTimer = setTimeout(stepForwardAnimation, 10);
+      const animationTimer = setTimeout(stepForwardAnimation, animationSpeed);
 
       return () => clearTimeout(animationTimer);
     }
   }, [isPlaying, arrayBars, stepForwardAnimation]);
 
+  useEffect(() => {
+    generateArrayBars();
+  }, [arraySize]);
+
   return (
     <>
-      <Nav generateArrayBars={generateArrayBars} />
-      <Visualizer arrayBars={arrayBars} />
+      <Nav
+        generateArrayBars={generateArrayBars}
+        onArraySizeSliderChange={onArraySizeSliderChange}
+        onAnimationSpeedSliderChange={onAnimationSpeedSliderChange}
+        arraySize={arraySize}
+        animationSpeed={animationSpeed}
+      />
+      <Visualizer arrayBars={arrayBars} arraySize={arraySize} />
       <Controller
         stepForwardAnimation={stepForwardAnimation}
         playAnimations={playAnimations}

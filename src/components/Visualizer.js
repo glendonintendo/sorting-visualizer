@@ -1,6 +1,6 @@
 import { Flex, Box } from "@chakra-ui/react";
 
-const Visualizer = ({ arrayBars }) => {
+const Visualizer = ({ arrayBars, arraySize }) => {
   return (
     <Flex
       bg="tomato"
@@ -13,7 +13,7 @@ const Visualizer = ({ arrayBars }) => {
       alignItems="flex-end"
     >
       {arrayBars.map((bar) => (
-        <Box bg="teal" h={`${bar.barHeight}%`} w="10px" key={bar.key} />
+        <Box bg="teal" h={`${bar.barHeight}%`} w={`${80/arraySize}%`} key={bar.key} />
       ))}
     </Flex>
   );

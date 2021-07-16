@@ -9,7 +9,15 @@ import {
   SliderThumb,
 } from "@chakra-ui/react";
 
-const Nav = ({ generateArrayBars }) => {
+const Nav = ({
+  generateArrayBars,
+  onArraySizeSliderChange,
+  onAnimationSpeedSliderChange,
+  arraySize,
+  animationSpeed,
+}) => {
+  console.log(animationSpeed);
+
   return (
     <Flex
       align="center"
@@ -21,9 +29,11 @@ const Nav = ({ generateArrayBars }) => {
       <Slider
         aria-label="array size slider"
         min={10}
-        max={75}
+        max={60}
         step={5}
-        defaultValue={40}
+        defaultValue={arraySize}
+        focusThumbOnChange={false}
+        onChangeEnd={(value) => onArraySizeSliderChange(value)}
         w="20vw"
       >
         <SliderTrack>
@@ -34,6 +44,12 @@ const Nav = ({ generateArrayBars }) => {
       <Slider
         aria-label="visualization speed slider"
         onChangeEnd={(value) => console.log(value)}
+        min={0}
+        max={198}
+        step={2}
+        defaultValue={200 - animationSpeed}
+        focusThumbOnChange={false}
+        onChangeEnd={(value) => onAnimationSpeedSliderChange(value)}
         w="20vw"
       >
         <SliderTrack>
