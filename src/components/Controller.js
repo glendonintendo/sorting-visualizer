@@ -1,4 +1,4 @@
-import { Flex, Button } from "@chakra-ui/react";
+import { Flex, IconButton } from "@chakra-ui/react";
 import {
   IoPlaySkipBack,
   IoChevronBack,
@@ -16,16 +16,20 @@ const Controller = ({
   goToEnd,
   goToStart,
   isPlaying,
+  currentAnimation,
+  animations
 }) => {
   const playPauseButton = isPlaying ? (
-    <Button onClick={pauseAnimations}>
-      <IoPause />
-    </Button>
+    <IconButton
+      onClick={pauseAnimations}
+      icon={<IoPause />}
+      colorScheme="teal"
+    />
   ) : (
-    <Button onClick={playAnimations}>
-      <IoPlay />
-    </Button>
+    <IconButton onClick={playAnimations} icon={<IoPlay />} colorScheme="teal" />
   );
+
+  console.log(currentAnimation);
 
   return (
     <Flex
@@ -35,19 +39,29 @@ const Controller = ({
       w={{ base: "95vw", md: "60vw", lg: "25vw" }}
       mx="auto"
     >
-      <Button onClick={goToStart}>
-        <IoPlaySkipBack />
-      </Button>
-      <Button onClick={stepBackwardAnimation}>
-        <IoChevronBack />
-      </Button>
+      <IconButton
+        onClick={goToStart}
+        icon={<IoPlaySkipBack />}
+        colorScheme="teal"
+      />
+      <IconButton
+        onClick={stepBackwardAnimation}
+        icon={<IoChevronBack />}
+        colorScheme="teal"
+        isDisabled={isPlaying || currentAnimation === 0}
+      />
       {playPauseButton}
-      <Button onClick={stepForwardAnimation}>
-        <IoChevronForward />
-      </Button>
-      <Button onClick={goToEnd}>
-        <IoPlaySkipForward />
-      </Button>
+      <IconButton
+        onClick={stepForwardAnimation}
+        icon={<IoChevronForward />}
+        colorScheme="teal"
+        isDisabled={isPlaying || currentAnimation >= animations.length}
+      />
+      <IconButton
+        onClick={goToEnd}
+        icon={<IoPlaySkipForward />}
+        colorScheme="teal"
+      />
     </Flex>
   );
 };

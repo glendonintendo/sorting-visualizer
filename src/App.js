@@ -57,6 +57,7 @@ function App() {
     }
     currentAnimation.current = 0;
     setArrayBars(array);
+    setIsPlaying(false);
   };
 
   const goToEnd = () => {
@@ -119,6 +120,8 @@ function App() {
         goToEnd={goToEnd}
         goToStart={goToStart}
         isPlaying={isPlaying}
+        currentAnimation={currentAnimation.current}
+        animations={animations.current}
       />
     </>
   );
