@@ -18,6 +18,7 @@ function App() {
     for (let i = 0; i < arraySize; i++) {
       array.push({
         barHeight: Math.floor(Math.random() * 96) + 5,
+        color: "teal",
         key: i,
       });
     }

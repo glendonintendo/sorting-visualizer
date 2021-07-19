@@ -12,7 +12,7 @@ const Visualizer = ({ arrayBars, arraySize }) => {
     >
       {arrayBars.map((bar) => (
         <Box
-          bg="teal"
+          bg={bar.color}
           h={`${bar.barHeight}%`}
           w={`${80 / arraySize}%`}
           key={bar.key}
