@@ -30,19 +30,26 @@ function App() {
   };
 
   const stepForwardAnimation = useCallback(() => {
-    console.log("yooo");
     if (currentAnimation.current >= animations.current.length) {
       setIsPlaying(false);
       return;
     }
-    const array = [...arrayBars];
+    let array = [...arrayBars];
+    const [idx1, idx2] = animations.current[currentAnimation.current].indeces;
     switch (animations.current[currentAnimation.current].type) {
       case "swap":
-        const [idx1, idx2] =
-          animations.current[currentAnimation.current].indeces;
         [array[idx1], array[idx2]] = [array[idx2], array[idx1]];
         break;
       case "color":
+        array = array.map((barObj, i) => {
+          if (i === idx1 || i === idx2) {
+            const coloredBar = { ...barObj, color: "black" };
+            console.log(coloredBar);
+            return coloredBar;
+          }
+          return { ...barObj, color: "teal" };
+        });
+        console.log(array);
         break;
       default:
         break;
