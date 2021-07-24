@@ -1,16 +1,16 @@
-import React from "react";
-
+import { IoSpeedometer, IoCellular } from "react-icons/io5";
+import { IoMdRefresh } from "react-icons/io";
 import {
   Flex,
   Box,
-  Button,
+  IconButton,
   Slider,
   SliderTrack,
   SliderFilledTrack,
   SliderThumb,
 } from "@chakra-ui/react";
 
-import { IoSpeedometer, IoCellular } from "react-icons/io5";
+import SortTypeSelect from "./SortTypeSelect";
 
 const Nav = ({
   generateArrayBars,
@@ -18,6 +18,8 @@ const Nav = ({
   onAnimationSpeedSliderChange,
   arraySize,
   animationSpeed,
+  sortType,
+  onSelectSortType,
 }) => {
   return (
     <Flex
@@ -25,7 +27,7 @@ const Nav = ({
       h="10vh"
       w={{ base: "95vw", md: "95vw", lg: "80vw" }}
       mx="auto"
-      justifyContent="space-between"
+      justifyContent="space-around"
     >
       <Slider
         aria-label="array size slider"
@@ -35,6 +37,7 @@ const Nav = ({
         defaultValue={arraySize}
         focusThumbOnChange={false}
         onChange={(value) => onArraySizeSliderChange(value)}
+        colorScheme="teal"
         w="20vw"
       >
         <SliderTrack>
@@ -56,6 +59,7 @@ const Nav = ({
         defaultValue={200 - animationSpeed}
         focusThumbOnChange={false}
         onChange={(value) => onAnimationSpeedSliderChange(value)}
+        colorScheme="teal"
         w="20vw"
       >
         <SliderTrack>
@@ -70,7 +74,19 @@ const Nav = ({
         </SliderThumb>
       </Slider>
 
-      <Button onClick={generateArrayBars}>Generate array!</Button>
+      <Box w={["35%", "25%", "16%", "15%"]}>
+        <SortTypeSelect
+          sortType={sortType}
+          onSelectSortType={onSelectSortType}
+        />
+      </Box>
+
+      <IconButton
+        onClick={generateArrayBars}
+        icon={<IoMdRefresh />}
+        colorScheme="teal"
+        fontSize="24px"
+      ></IconButton>
     </Flex>
   );
 };
