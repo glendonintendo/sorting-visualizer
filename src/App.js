@@ -3,12 +3,13 @@ import Nav from "./components/Nav";
 import Visualizer from "./components/Visualizer";
 import Controller from "./components/Controller";
 
-import { generateBubbleSortAnimations } from "./utils/animationsGenerators";
+import { generateAnimations } from "./utils/animationsGenerators";
 
 function App() {
   const [arrayBars, setArrayBars] = useState([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [arraySize, setArraySize] = useState(30);
+  const [sortType, setSortType] = useState("bubble");
   const [animationSpeed, setAnimationSpeed] = useState(50);
   const animations = useRef([]);
   const currentAnimation = useRef(0);
@@ -25,7 +26,7 @@ function App() {
 
     setArrayBars(array);
     setIsPlaying(false);
-    animations.current = generateBubbleSortAnimations(array);
+    animations.current = generateAnimations(array, sortType);
     currentAnimation.current = 0;
   };
 
@@ -99,6 +100,10 @@ function App() {
   const onAnimationSpeedSliderChange = (value) => {
     setAnimationSpeed(200 - value);
   };
+  
+  const onSelectSortType = (value) => {
+    setSortType(value);
+  }
 
   const playAnimations = () => {
     setIsPlaying(true);
@@ -132,6 +137,8 @@ function App() {
         onAnimationSpeedSliderChange={onAnimationSpeedSliderChange}
         arraySize={arraySize}
         animationSpeed={animationSpeed}
+        sortType={sortType}
+        onSelectSortType={onSelectSortType}
       />
       <Visualizer arrayBars={arrayBars} arraySize={arraySize} />
       <Controller
