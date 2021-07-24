@@ -30,13 +30,24 @@ function App() {
   };
 
   const stepForwardAnimation = useCallback(() => {
+    console.log("yooo");
     if (currentAnimation.current >= animations.current.length) {
       setIsPlaying(false);
       return;
     }
-    const [idx1, idx2] = animations.current[currentAnimation.current];
     const array = [...arrayBars];
-    [array[idx1], array[idx2]] = [array[idx2], array[idx1]];
+    switch (animations.current[currentAnimation.current].type) {
+      case "swap":
+        const [idx1, idx2] =
+          animations.current[currentAnimation.current].indeces;
+        [array[idx1], array[idx2]] = [array[idx2], array[idx1]];
+        break;
+      case "color":
+        break;
+      default:
+        break;
+    }
+
     currentAnimation.current++;
     setArrayBars(array);
   }, [arrayBars]);
@@ -44,16 +55,19 @@ function App() {
   const stepBackwardAnimation = () => {
     if (currentAnimation.current <= 0) return;
     currentAnimation.current--;
-    const [idx1, idx2] = animations.current[currentAnimation.current];
-    const array = [...arrayBars];
-    [array[idx1], array[idx2]] = [array[idx2], array[idx1]];
-    setArrayBars(array);
+
+    if (animations.current[currentAnimation.current].type === "swap") {
+      const [idx1, idx2] = animations.current[currentAnimation.current].indeces;
+      const array = [...arrayBars];
+      [array[idx1], array[idx2]] = [array[idx2], array[idx1]];
+      setArrayBars(array);
+    }
   };
 
   const goToStart = () => {
     const array = [...arrayBars];
     for (let i = currentAnimation.current - 1; i >= 0; i--) {
-      const [idx1, idx2] = animations.current[i];
+      const [idx1, idx2] = animations.current[i].indeces;
       [array[idx1], array[idx2]] = [array[idx2], array[idx1]];
     }
     currentAnimation.current = 0;
@@ -64,7 +78,7 @@ function App() {
   const goToEnd = () => {
     const array = [...arrayBars];
     for (let i = currentAnimation.current; i < animations.current.length; i++) {
-      const [idx1, idx2] = animations.current[i];
+      const [idx1, idx2] = animations.current[i].indeces;
       [array[idx1], array[idx2]] = [array[idx2], array[idx1]];
     }
     currentAnimation.current = animations.current.length;

@@ -29,8 +29,6 @@ const Controller = ({
     <IconButton onClick={playAnimations} icon={<IoPlay />} colorScheme="teal" />
   );
 
-  console.log(currentAnimation);
-
   return (
     <Flex
       justifyContent="space-between"
