@@ -26,17 +26,17 @@ const generateBubbleSortAnimations = (array) => {
 const generateSelectionSortAnimations = (array) => {
   const animations = [];
   const dupArray = [...array];
-  
+
   for (let i = 0; i < dupArray.length; i++) {
-		let min = i;
-		for (let j = i; j < dupArray.length; j++) {
-			if (dupArray[j].barHeight < dupArray[min].barHeight) {
-				min = j;
-			}
-		}
+    let min = i;
+    for (let j = i; j < dupArray.length; j++) {
+      if (dupArray[j].barHeight < dupArray[min].barHeight) {
+        min = j;
+      }
+    }
     animations.push({ type: "swap", indeces: [i, min] });
-		swap(dupArray, i, min)
-	}
+    swap(dupArray, i, min);
+  }
 
   return animations;
 };
@@ -114,37 +114,77 @@ const generateHeapSortAnimations = (array) => {
   return animations;
 };
 
-const generateMergeSortAnimations = (array) => {};
+const generateMergeSortAnimations = (array) => {
+  const animations = [];
+  const dupArray = [...array];
+
+  mergeSortHelper(dupArray, animations);
+};
+
+const mergeSortHelper = (array, animations) => {
+  if (array.length <= 1) return array;
+  const mid = Math.floor(array.length / 2);
+  const left = array.slice(0, mid);
+  const right = array.slice(mid, array.length);
+  return doMerge(mergeSortHelper(left), mergeSortHelper(right));
+};
+
+const doMerge = (arr1, arr2, animations) => {
+  const result = [];
+  let idx1 = 0;
+  let idx2 = 0;
+
+  while (idx1 < arr1.length && idx2 < arr2.length) {
+    if (arr1[idx1] < arr2[idx2]) {
+      result.push(arr1[idx1]);
+      idx1++;
+    } else {
+      result.push(arr2[idx2]);
+      idx2++;
+    }
+  }
+
+  while (idx1 < arr1.length) {
+    result.push(arr1[idx1]);
+    idx1++;
+  }
+
+  while (idx2 < arr2.length) {
+    result.push(arr2[idx2]);
+    idx2++;
+  }
+
+  return result;
+};
 
 const generateQuickSortAnimations = (array) => {
   const animations = [];
   const dupArray = [...array];
-
   quickSortHelper(dupArray, 0, dupArray.length - 1, animations);
   return animations;
 };
 
 const quickSortHelper = (array, start, end, animations) => {
   if (start >= end) return;
-	const randIdx = Math.floor(Math.random() * (end - start) + start);
+  const randIdx = Math.floor(Math.random() * (end - start) + start);
   animations.push({ type: "swap", indeces: [start, randIdx] });
-	swap(array, start, randIdx);
-	const pivot = array[start];
-	let leftIdx = start;
-	let rightIdx = start + 1;
-	while (rightIdx <= end) {
-		if (array[rightIdx] < pivot) {
-			leftIdx++;
+  swap(array, start, randIdx);
+  const pivot = array[start].barHeight;
+  let leftIdx = start;
+  let rightIdx = start + 1;
+  while (rightIdx <= end) {
+    if (array[rightIdx].barHeight < pivot) {
+      leftIdx++;
       animations.push({ type: "swap", indeces: [rightIdx, leftIdx] });
-			swap(array, rightIdx, leftIdx);
-		}
-		rightIdx++;
-	}
+      swap(array, rightIdx, leftIdx);
+    }
+    rightIdx++;
+  }
   animations.push({ type: "swap", indeces: [start, leftIdx] });
-	swap(array, start, leftIdx);
-	quickSortHelper(array, start, leftIdx - 1, animations);
-	quickSortHelper(array, leftIdx + 1, rightIdx - 1, animations);
-}
+  swap(array, start, leftIdx);
+  quickSortHelper(array, start, leftIdx - 1, animations);
+  quickSortHelper(array, leftIdx + 1, rightIdx - 1, animations);
+};
 
 export const generateAnimations = (array, sortType) => {
   switch (sortType) {
