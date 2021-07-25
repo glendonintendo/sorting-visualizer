@@ -117,44 +117,30 @@ const generateHeapSortAnimations = (array) => {
 const generateMergeSortAnimations = (array) => {
   const animations = [];
   const dupArray = [...array];
-
-  mergeSortHelper(dupArray, animations);
+  if (dupArray.length <= 1) return dupArray;
+  const auxiliary = [...array];
+  mergeSortHelper(dupArray, 0, array.length - 1, auxiliary, animations);
+  return animations;
 };
 
-const mergeSortHelper = (array, animations) => {
-  if (array.length <= 1) return array;
-  const mid = Math.floor(array.length / 2);
-  const left = array.slice(0, mid);
-  const right = array.slice(mid, array.length);
-  return doMerge(mergeSortHelper(left), mergeSortHelper(right));
+const mergeSortHelper = (array, start, end, auxiliary, animations) => {
+  if (start === end) return;
+  const mid = Math.floor((start + end) / 2);
+  mergeSortHelper(auxiliary, start, mid, array, animations);
+  mergeSortHelper(auxiliary, mid + 1, end, array, animations);
+  merge(array, start, mid, end, auxiliary, animations);
 };
 
-const doMerge = (arr1, arr2, animations) => {
-  const result = [];
-  let idx1 = 0;
-  let idx2 = 0;
-
-  while (idx1 < arr1.length && idx2 < arr2.length) {
-    if (arr1[idx1] < arr2[idx2]) {
-      result.push(arr1[idx1]);
-      idx1++;
-    } else {
-      result.push(arr2[idx2]);
-      idx2++;
-    }
+const merge = (array, start, mid, end, auxiliary, animations) => {
+  let k = start;
+  let i = start;
+  let j = mid + 1;
+  while (i <= mid && j <= end) {
+    if (auxiliary[i].barHeight <= auxiliary[j].barHeight) array[k++] = auxiliary[j++];
+    else array[k++] = auxiliary[j++];
   }
-
-  while (idx1 < arr1.length) {
-    result.push(arr1[idx1]);
-    idx1++;
-  }
-
-  while (idx2 < arr2.length) {
-    result.push(arr2[idx2]);
-    idx2++;
-  }
-
-  return result;
+  while (i <= mid) array[k++] = auxiliary[i++];
+  while (j <= end) array[k++] = auxiliary[j++];
 };
 
 const generateQuickSortAnimations = (array) => {
@@ -167,7 +153,8 @@ const generateQuickSortAnimations = (array) => {
 const quickSortHelper = (array, start, end, animations) => {
   if (start >= end) return;
   const randIdx = Math.floor(Math.random() * (end - start) + start);
-  animations.push({ type: "swap", indeces: [start, randIdx] });
+  if (start !== randIdx)
+    animations.push({ type: "swap", indeces: [start, randIdx] });
   swap(array, start, randIdx);
   const pivot = array[start].barHeight;
   let leftIdx = start;
@@ -175,12 +162,14 @@ const quickSortHelper = (array, start, end, animations) => {
   while (rightIdx <= end) {
     if (array[rightIdx].barHeight < pivot) {
       leftIdx++;
-      animations.push({ type: "swap", indeces: [rightIdx, leftIdx] });
+      if (rightIdx !== leftIdx)
+        animations.push({ type: "swap", indeces: [rightIdx, leftIdx] });
       swap(array, rightIdx, leftIdx);
     }
     rightIdx++;
   }
-  animations.push({ type: "swap", indeces: [start, leftIdx] });
+  if (start !== leftIdx)
+    animations.push({ type: "swap", indeces: [start, leftIdx] });
   swap(array, start, leftIdx);
   quickSortHelper(array, start, leftIdx - 1, animations);
   quickSortHelper(array, leftIdx + 1, rightIdx - 1, animations);

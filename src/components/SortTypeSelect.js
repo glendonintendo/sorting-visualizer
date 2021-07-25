@@ -7,7 +7,7 @@ const SortTypeSelect = ({ sortType, onSelectSortType }) => {
       <option value="selection">Selection</option>
       <option value="insertion">Insertion</option>
       <option value="heap">Heap</option>
-      <option value="merge">Merge</option>
+      <option disabled value="merge">Merge (coming soon!)</option>
       <option value="quick">Quick</option>
     </Select>
   );
