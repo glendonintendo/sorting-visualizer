@@ -127,7 +127,7 @@ function App() {
 
   useEffect(() => {
     generateArrayBars();
-  }, [arraySize]);
+  }, [arraySize, sortType]);
 
   return (
     <>
@@ -139,6 +139,7 @@ function App() {
         animationSpeed={animationSpeed}
         sortType={sortType}
         onSelectSortType={onSelectSortType}
+        isPlaying={isPlaying}
       />
       <Visualizer arrayBars={arrayBars} arraySize={arraySize} />
       <Controller

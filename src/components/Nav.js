@@ -20,6 +20,7 @@ const Nav = ({
   animationSpeed,
   sortType,
   onSelectSortType,
+  isPlaying
 }) => {
   return (
     <Flex
@@ -86,6 +87,7 @@ const Nav = ({
         icon={<IoMdRefresh />}
         colorScheme="teal"
         fontSize="24px"
+        isDisabled={isPlaying}
       ></IconButton>
     </Flex>
   );
