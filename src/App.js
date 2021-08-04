@@ -5,6 +5,8 @@ import Controller from "./components/Controller";
 
 import { generateAnimations } from "./utils/animationsGenerators";
 
+import { color, useColorMode } from "@chakra-ui/react";
+
 function App() {
   const [arrayBars, setArrayBars] = useState([]);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -13,6 +15,7 @@ function App() {
   const [animationSpeed, setAnimationSpeed] = useState(50);
   const animations = useRef([]);
   const currentAnimation = useRef(0);
+  const { colorMode, toggleColorMode } = useColorMode();
 
   const generateArrayBars = () => {
     const array = [];
@@ -45,12 +48,10 @@ function App() {
         array = array.map((barObj, i) => {
           if (i === idx1 || i === idx2) {
             const coloredBar = { ...barObj, color: "black" };
-            console.log(coloredBar);
             return coloredBar;
           }
           return { ...barObj, color: "teal" };
         });
-        console.log(array);
         break;
       default:
         break;
@@ -140,6 +141,8 @@ function App() {
         sortType={sortType}
         onSelectSortType={onSelectSortType}
         isPlaying={isPlaying}
+        toggleColorMode={toggleColorMode}
+        colorMode={colorMode}
       />
       <Visualizer arrayBars={arrayBars} arraySize={arraySize} />
       <Controller

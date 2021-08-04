@@ -1,5 +1,6 @@
 import { IoSpeedometer, IoCellular } from "react-icons/io5";
 import { IoMdRefresh } from "react-icons/io";
+import { IoMoon, IoSunny } from "react-icons/io5";
 import {
   Flex,
   Box,
@@ -20,7 +21,9 @@ const Nav = ({
   animationSpeed,
   sortType,
   onSelectSortType,
-  isPlaying
+  isPlaying,
+  toggleColorMode,
+  colorMode
 }) => {
   return (
     <Flex
@@ -85,6 +88,13 @@ const Nav = ({
       <IconButton
         onClick={generateArrayBars}
         icon={<IoMdRefresh />}
+        colorScheme="teal"
+        fontSize="24px"
+        isDisabled={isPlaying}
+      ></IconButton>
+      <IconButton
+        onClick={toggleColorMode}
+        icon={colorMode === "light" ? <IoMoon /> : <IoSunny />}
         colorScheme="teal"
         fontSize="24px"
         isDisabled={isPlaying}
