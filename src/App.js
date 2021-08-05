@@ -144,7 +144,7 @@ function App() {
         toggleColorMode={toggleColorMode}
         colorMode={colorMode}
       />
-      <Visualizer arrayBars={arrayBars} arraySize={arraySize} />
+      <Visualizer arrayBars={arrayBars} arraySize={arraySize} colorMode={colorMode} />
       <Controller
         stepForwardAnimation={stepForwardAnimation}
         playAnimations={playAnimations}

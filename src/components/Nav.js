@@ -93,11 +93,11 @@ const Nav = ({
         isDisabled={isPlaying}
       ></IconButton>
       <IconButton
+        display={["none", "reset", "reset", "reset"]}
         onClick={toggleColorMode}
         icon={colorMode === "light" ? <IoMoon /> : <IoSunny />}
         colorScheme="teal"
         fontSize="24px"
-        isDisabled={isPlaying}
       ></IconButton>
     </Flex>
   );
