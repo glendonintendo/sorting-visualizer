@@ -1,6 +1,4 @@
-import { IoSpeedometer, IoCellular } from "react-icons/io5";
-import { IoMdRefresh } from "react-icons/io";
-import { IoMoon, IoSunny } from "react-icons/io5";
+import { IoSpeedometer, IoCellular, IoInformation } from "react-icons/io5";
 import {
   Flex,
   Box,
@@ -9,29 +7,30 @@ import {
   SliderTrack,
   SliderFilledTrack,
   SliderThumb,
+  HStack,
+  useDisclosure,
 } from "@chakra-ui/react";
 
 import SortTypeSelect from "./SortTypeSelect";
+import SortInfoModal from "./SortInfoModal";
 
 const Nav = ({
-  generateArrayBars,
   onArraySizeSliderChange,
   onAnimationSpeedSliderChange,
   arraySize,
   animationSpeed,
   sortType,
   onSelectSortType,
-  isPlaying,
-  toggleColorMode,
-  colorMode
 }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <Flex
       alignItems="center"
       h="10vh"
       w={{ base: "95vw", md: "95vw", lg: "80vw" }}
       mx="auto"
-      justifyContent="space-around"
+      justifyContent={["space-between", "space-around"]}
     >
       <Slider
         aria-label="array size slider"
@@ -42,16 +41,16 @@ const Nav = ({
         focusThumbOnChange={false}
         onChange={(value) => onArraySizeSliderChange(value)}
         colorScheme="teal"
-        w="20vw"
+        w="25vw"
       >
         <SliderTrack>
           <SliderFilledTrack />
         </SliderTrack>
-        <SliderThumb boxSize={[5, 7, 9]}>
+        <SliderThumb boxSize={[6, 8, 10]}>
           <Box
             color={"tomato"}
             as={IoCellular}
-            fontSize={{ base: "14px", md: "24px", lg: "26px" }}
+            fontSize={{ base: "16px", md: "24px", lg: "28px" }}
           />
         </SliderThumb>
       </Slider>
@@ -64,41 +63,39 @@ const Nav = ({
         focusThumbOnChange={false}
         onChange={(value) => onAnimationSpeedSliderChange(value)}
         colorScheme="teal"
-        w="20vw"
+        w="25vw"
       >
         <SliderTrack>
           <SliderFilledTrack />
         </SliderTrack>
-        <SliderThumb boxSize={[5, 7, 9]}>
+        <SliderThumb boxSize={[6, 8, 10]}>
           <Box
             color={"tomato"}
             as={IoSpeedometer}
-            fontSize={{ base: "14px", md: "28px", lg: "28px" }}
+            fontSize={{ base: "18px", md: "28px", lg: "30px" }}
           />
         </SliderThumb>
       </Slider>
 
-      <Box w={["35%", "25%", "16%", "15%"]}>
-        <SortTypeSelect
-          sortType={sortType}
-          onSelectSortType={onSelectSortType}
+      <HStack>
+        <IconButton
+          icon={<IoInformation />}
+          size="2xs"
+          borderRadius="50%"
+          border="transparent"
+          colorScheme="teal"
+          fontSize="20px"
+          mr={["1px", "2px", "5px", "5px"]}
+          onClick={onOpen}
         />
-      </Box>
-
-      <IconButton
-        onClick={generateArrayBars}
-        icon={<IoMdRefresh />}
-        colorScheme="teal"
-        fontSize="24px"
-        isDisabled={isPlaying}
-      ></IconButton>
-      <IconButton
-        display={["none", "reset", "reset", "reset"]}
-        onClick={toggleColorMode}
-        icon={colorMode === "light" ? <IoMoon /> : <IoSunny />}
-        colorScheme="teal"
-        fontSize="24px"
-      ></IconButton>
+        <SortInfoModal onClose={onClose} isOpen={isOpen} sortType={sortType} />
+        <Box w={["25vw", "25vw", "16vw", "10vw"]} maxWidth="200px">
+          <SortTypeSelect
+            sortType={sortType}
+            onSelectSortType={onSelectSortType}
+          />
+        </Box>
+      </HStack>
     </Flex>
   );
 };

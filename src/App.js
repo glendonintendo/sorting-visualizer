@@ -1,11 +1,10 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import { generateAnimations } from "./utils/animationsGenerators";
+import { useColorMode } from "@chakra-ui/react";
+
 import Nav from "./components/Nav";
 import Visualizer from "./components/Visualizer";
 import Controller from "./components/Controller";
-
-import { generateAnimations } from "./utils/animationsGenerators";
-
-import { color, useColorMode } from "@chakra-ui/react";
 
 function App() {
   const [arrayBars, setArrayBars] = useState([]);
@@ -101,10 +100,10 @@ function App() {
   const onAnimationSpeedSliderChange = (value) => {
     setAnimationSpeed(200 - value);
   };
-  
+
   const onSelectSortType = (value) => {
     setSortType(value);
-  }
+  };
 
   const playAnimations = () => {
     setIsPlaying(true);
@@ -133,18 +132,18 @@ function App() {
   return (
     <>
       <Nav
-        generateArrayBars={generateArrayBars}
         onArraySizeSliderChange={onArraySizeSliderChange}
         onAnimationSpeedSliderChange={onAnimationSpeedSliderChange}
         arraySize={arraySize}
         animationSpeed={animationSpeed}
         sortType={sortType}
         onSelectSortType={onSelectSortType}
-        isPlaying={isPlaying}
-        toggleColorMode={toggleColorMode}
+      />
+      <Visualizer
+        arrayBars={arrayBars}
+        arraySize={arraySize}
         colorMode={colorMode}
       />
-      <Visualizer arrayBars={arrayBars} arraySize={arraySize} colorMode={colorMode} />
       <Controller
         stepForwardAnimation={stepForwardAnimation}
         playAnimations={playAnimations}
@@ -155,6 +154,9 @@ function App() {
         isPlaying={isPlaying}
         currentAnimation={currentAnimation.current}
         animations={animations.current}
+        generateArrayBars={generateArrayBars}
+        toggleColorMode={toggleColorMode}
+        colorMode={colorMode}
       />
     </>
   );

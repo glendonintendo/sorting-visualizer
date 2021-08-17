@@ -2,12 +2,18 @@ import { Select } from "@chakra-ui/react";
 
 const SortTypeSelect = ({ sortType, onSelectSortType }) => {
   return (
-    <Select value={sortType} onChange={(e) => onSelectSortType(e.target.value)}>
+    <Select
+      value={sortType}
+      onChange={(e) => onSelectSortType(e.target.value)}
+      size="sm"
+      fontSize="16px"
+      borderRadius="5px"
+    >
       <option value="bubble">Bubble</option>
       <option value="selection">Selection</option>
       <option value="insertion">Insertion</option>
       <option value="heap">Heap</option>
-      <option disabled value="merge">Merge (coming soon!)</option>
+      <option value="merge">Merge</option>
       <option value="quick">Quick</option>
     </Select>
   );
