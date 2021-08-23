@@ -21,7 +21,7 @@ function App() {
     for (let i = 0; i < arraySize; i++) {
       array.push({
         barHeight: Math.floor(Math.random() * 96) + 5,
-        color: "teal",
+        color: "blue",
         key: i,
       });
     }
@@ -50,7 +50,7 @@ function App() {
             const coloredBar = { ...barObj, color: "black" };
             return coloredBar;
           }
-          return { ...barObj, color: "teal" };
+          return { ...barObj, color: "blue" };
         });
         break;
       case "assignHeight":
@@ -152,6 +152,7 @@ function App() {
         animationSpeed={animationSpeed}
         sortType={sortType}
         onSelectSortType={onSelectSortType}
+        colorMode={colorMode}
       />
       <Visualizer
         arrayBars={arrayBars}

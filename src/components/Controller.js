@@ -29,10 +29,10 @@ const Controller = ({
     <IconButton
       onClick={pauseAnimations}
       icon={<IoPause />}
-      colorScheme="teal"
+      colorScheme="blue"
     />
   ) : (
-    <IconButton onClick={playAnimations} icon={<IoPlay />} colorScheme="teal" />
+    <IconButton onClick={playAnimations} icon={<IoPlay />} colorScheme="blue" />
   );
 
   return (
@@ -46,7 +46,7 @@ const Controller = ({
       <IconButton
         onClick={generateArrayBars}
         icon={<IoMdRefresh />}
-        colorScheme="teal"
+        colorScheme="blue"
         fontSize="24px"
         isDisabled={isPlaying}
       ></IconButton>
@@ -55,32 +55,32 @@ const Controller = ({
         <IconButton
           onClick={goToStart}
           icon={<IoPlaySkipBack />}
-          colorScheme="teal"
+          colorScheme="blue"
         />
         <IconButton
           onClick={stepBackwardAnimation}
           icon={<IoChevronBack />}
-          colorScheme="teal"
+          colorScheme="blue"
           isDisabled={isPlaying || currentAnimation === 0}
         />
         {playPauseButton}
         <IconButton
           onClick={stepForwardAnimation}
           icon={<IoChevronForward />}
-          colorScheme="teal"
+          colorScheme="blue"
           isDisabled={isPlaying || currentAnimation >= animations.length}
         />
         <IconButton
           onClick={goToEnd}
           icon={<IoPlaySkipForward />}
-          colorScheme="teal"
+          colorScheme="blue"
         />
       </HStack>
 
       <IconButton
         onClick={toggleColorMode}
         icon={colorMode === "light" ? <IoMoon /> : <IoSunny />}
-        colorScheme="teal"
+        colorScheme="blue"
         fontSize="24px"
       ></IconButton>
     </Flex>

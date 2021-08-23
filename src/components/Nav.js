@@ -1,4 +1,5 @@
 import { IoSpeedometer, IoCellular, IoInformation } from "react-icons/io5";
+import { BiRun } from "react-icons/bi"
 import {
   Flex,
   Box,
@@ -21,6 +22,7 @@ const Nav = ({
   animationSpeed,
   sortType,
   onSelectSortType,
+  colorMode
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -40,17 +42,17 @@ const Nav = ({
         defaultValue={arraySize}
         focusThumbOnChange={false}
         onChange={(value) => onArraySizeSliderChange(value)}
-        colorScheme="teal"
+        colorScheme="green"
         w="25vw"
       >
         <SliderTrack>
           <SliderFilledTrack />
         </SliderTrack>
-        <SliderThumb boxSize={[6, 8, 10]}>
+        <SliderThumb boxSize={[6, 8, 8]} bg={colorMode === "light" ? "green.500" : "green.200"}>
           <Box
-            color={"tomato"}
             as={IoCellular}
-            fontSize={{ base: "16px", md: "24px", lg: "28px" }}
+            color={colorMode === "light" ? "gray.200" : "gray.500"}
+            fontSize={{ base: "16px", md: "24px", lg: "24px" }}
           />
         </SliderThumb>
       </Slider>
@@ -62,17 +64,17 @@ const Nav = ({
         defaultValue={200 - animationSpeed}
         focusThumbOnChange={false}
         onChange={(value) => onAnimationSpeedSliderChange(value)}
-        colorScheme="teal"
+        colorScheme="green"
         w="25vw"
       >
         <SliderTrack>
           <SliderFilledTrack />
         </SliderTrack>
-        <SliderThumb boxSize={[6, 8, 10]}>
+        <SliderThumb boxSize={[6, 8, 8]} bg={colorMode === "light" ? "green.500" : "green.200"}>
           <Box
-            color={"tomato"}
-            as={IoSpeedometer}
-            fontSize={{ base: "18px", md: "28px", lg: "30px" }}
+            as={BiRun}
+            color={colorMode === "light" ? "gray.200" : "gray.500"}
+            fontSize={{ base: "18px", md: "28px", lg: "28px" }}
           />
         </SliderThumb>
       </Slider>
@@ -83,7 +85,7 @@ const Nav = ({
           size="2xs"
           borderRadius="50%"
           border="transparent"
-          colorScheme="teal"
+          colorScheme="blue"
           fontSize="20px"
           mr={["1px", "2px", "5px", "5px"]}
           onClick={onOpen}

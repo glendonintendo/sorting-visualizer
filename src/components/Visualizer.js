@@ -9,7 +9,7 @@ const Visualizer = ({ arrayBars, arraySize, colorMode }) => {
       mx="auto"
       alignItems="flex-end"
       borderBottom={`5px solid`}
-      borderColor={colorMode === "light" ? "teal.500" : "teal.200"}
+      borderColor={colorMode === "light" ? "blue.500" : "blue.200"}
       pb="1.5vh"
     >
       {arrayBars.map((bar) => (
