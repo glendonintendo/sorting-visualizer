@@ -1,4 +1,4 @@
-import { IoSpeedometer, IoCellular, IoInformation } from "react-icons/io5";
+import { IoCellular, IoInformation } from "react-icons/io5";
 import { BiRun } from "react-icons/bi"
 import {
   Flex,
