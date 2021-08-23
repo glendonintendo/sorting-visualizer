@@ -19,12 +19,52 @@ const merge = (array, start, mid, end, auxiliary, animations) => {
   let i = start;
   let j = mid + 1;
   while (i <= mid && j <= end) {
-    if (auxiliary[i].barHeight <= auxiliary[j].barHeight)
-      array[k++] = auxiliary[j++];
-    else array[k++] = auxiliary[j++];
+    if (auxiliary[i].barHeight <= auxiliary[j].barHeight) {
+      animations.push({
+        type: "assignHeight",
+        index: k,
+        newHeight: auxiliary[i].barHeight,
+        oldHeight: auxiliary[k].barHeight,
+      });
+      array[k] = auxiliary[i];
+      k++;
+      i++;
+    } else {
+      animations.push({
+        type: "assignHeight",
+        index: k,
+        newHeight: auxiliary[j].barHeight,
+        oldHeight: auxiliary[k].barHeight,
+      });
+      array[k] = auxiliary[j];
+      k++;
+      j++;
+    }
   }
-  while (i <= mid) array[k++] = auxiliary[i++];
-  while (j <= end) array[k++] = auxiliary[j++];
+
+  while (i <= mid) {
+    animations.push({
+      type: "assignHeight",
+      index: k,
+      newHeight: auxiliary[i].barHeight,
+      oldHeight: auxiliary[k].barHeight,
+    });
+    array[k] = auxiliary[i];
+    k++;
+    i++;
+  }
+
+  while (j <= end) {
+    animations.push({
+      type: "assignHeight",
+      index: k,
+      newHeight: auxiliary[j].barHeight,
+      oldHeight: auxiliary[k].barHeight,
+    });
+    array[k] = auxiliary[j];
+    k++;
+    j++;
+  }
 };
 
 export default generateMergeSortAnimations;

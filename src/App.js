@@ -38,9 +38,10 @@ function App() {
       return;
     }
     let array = [...arrayBars];
-    const [idx1, idx2] = animations.current[currentAnimation.current].indeces;
-    switch (animations.current[currentAnimation.current].type) {
+    const animation = animations.current[currentAnimation.current];
+    switch (animation.type) {
       case "swap":
+        const [idx1, idx2] = animation.indeces;
         [array[idx1], array[idx2]] = [array[idx2], array[idx1]];
         break;
       case "color":
@@ -51,6 +52,9 @@ function App() {
           }
           return { ...barObj, color: "teal" };
         });
+        break;
+      case "assignHeight":
+        array[animation.index].barHeight = animation.newHeight;
         break;
       default:
         break;
@@ -64,12 +68,22 @@ function App() {
     if (currentAnimation.current <= 0) return;
     currentAnimation.current--;
 
-    if (animations.current[currentAnimation.current].type === "swap") {
-      const [idx1, idx2] = animations.current[currentAnimation.current].indeces;
-      const array = [...arrayBars];
-      [array[idx1], array[idx2]] = [array[idx2], array[idx1]];
-      setArrayBars(array);
+    const array = [...arrayBars];
+    const animation = animations.current[currentAnimation.current];
+    switch (animation.type) {
+      case "swap":
+        const [idx1, idx2] =
+          animations.current[currentAnimation.current].indeces;
+        [array[idx1], array[idx2]] = [array[idx2], array[idx1]];
+        break;
+      case "assignHeight":
+        array[animation.index].barHeight = animation.oldHeight;
+        break;
+      default:
+        break;
     }
+
+    setArrayBars(array);
   };
 
   const goToStart = () => {
