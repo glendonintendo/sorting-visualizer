@@ -5,7 +5,7 @@ import generateHeapSortAnimations from "./sorts/heapSort";
 import generateMergeSortAnimations from "./sorts/mergeSort";
 import generateQuickSortAnimations from "./sorts/quickSort";
 
-export const generateAnimations = (array, sortType) => {
+const generateAnimations = (array, sortType) => {
   switch (sortType) {
     case "bubble":
       return generateBubbleSortAnimations(array);
@@ -23,3 +23,5 @@ export const generateAnimations = (array, sortType) => {
       return;
   }
 };
+
+export default generateAnimations;
