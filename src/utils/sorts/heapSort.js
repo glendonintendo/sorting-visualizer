@@ -1,8 +1,9 @@
 import swap from "../swap";
+import cloneArrayOfObjects from "../cloneArrayOfObjects";
 
 const generateHeapSortAnimations = (array) => {
   const animations = [];
-  const dupArray = [...array];
+  const dupArray = cloneArrayOfObjects(array);
 
   for (let i = 1; i < dupArray.length; i++) {
     const currVal = dupArray[i].barHeight;
@@ -11,14 +12,14 @@ const generateHeapSortAnimations = (array) => {
     while (currIdx > 0) {
       const parIdx = Math.floor((currIdx - 1) / 2);
       if (currVal <= dupArray[parIdx].barHeight) break;
-      animations.push({ type: "swap", indeces: [currIdx, parIdx] });
+      animations.push({ type: "swap", idx1: currIdx, idx2: parIdx });
       swap(dupArray, currIdx, parIdx);
       currIdx = parIdx;
     }
   }
 
   for (let end = dupArray.length - 1; end > 0; end--) {
-    animations.push({ type: "swap", indeces: [0, end] });
+    animations.push({ type: "swap", idx1: 0, idx2: end });
     swap(dupArray, 0, end);
     let currIdx = 0;
     const currVal = dupArray[0].barHeight;
@@ -48,7 +49,7 @@ const generateHeapSortAnimations = (array) => {
 
       if (idxToSwap === null) break;
 
-      animations.push({ type: "swap", indeces: [currIdx, idxToSwap] });
+      animations.push({ type: "swap", idx1: currIdx, idx2: idxToSwap });
       swap(dupArray, currIdx, idxToSwap);
       currIdx = idxToSwap;
     }

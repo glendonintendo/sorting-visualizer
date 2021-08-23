@@ -1,7 +1,9 @@
+import cloneArrayOfObjects from "../cloneArrayOfObjects";
+
 const generateMergeSortAnimations = (array) => {
   const animations = [];
-  const dupArray = [...array];
-  const auxiliary = [...array];
+  const dupArray = cloneArrayOfObjects(array);
+  const auxiliary = cloneArrayOfObjects(array);
   mergeSortHelper(dupArray, 0, array.length - 1, auxiliary, animations);
   return animations;
 };
