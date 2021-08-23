@@ -1,5 +1,5 @@
 import { Flex, IconButton, HStack } from "@chakra-ui/react";
-import { IoMdRefresh } from "react-icons/io";
+import { FaAsterisk } from "react-icons/fa";
 import {
   IoPlaySkipBack,
   IoChevronBack,
@@ -45,7 +45,7 @@ const Controller = ({
     >
       <IconButton
         onClick={generateArrayBars}
-        icon={<IoMdRefresh />}
+        icon={<FaAsterisk />}
         colorScheme="blue"
         fontSize="24px"
         isDisabled={isPlaying}
