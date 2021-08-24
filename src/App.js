@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useColorMode } from "@chakra-ui/react";
 
 import Nav from "./components/Nav";
@@ -8,6 +8,8 @@ import createArrayBars from "./utils/createArrayBars";
 import generateAnimations from "./utils/animationsGenerators";
 import cloneArrayOfObjects from "./utils/cloneArrayOfObjects";
 import getEndArrayState from "./utils/getEndArrayState";
+import getForwardStepArray from "./utils/getForwardStepArray";
+import getBackStepArray from "./utils/getBackStepArray";
 
 function App() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -26,64 +28,34 @@ function App() {
 
     setArrayBars(array);
     beginArrayState.current = cloneArrayOfObjects(array);
-    endArrayState.current = getEndArrayState(arrayBars);
+    endArrayState.current = getEndArrayState(array);
     setIsPlaying(false);
     animations.current = generateAnimations(array, sortType);
     currentAnimation.current = 0;
   };
 
-  const stepForwardAnimation = useCallback(() => {
+  const stepForwardAnimation = () => {
     if (currentAnimation.current >= animations.current.length) {
       setIsPlaying(false);
       return;
     }
-    let array = cloneArrayOfObjects(arrayBars);
-    const animation = animations.current[currentAnimation.current];
-    switch (animation.type) {
-      case "swap":
-        const { idx1, idx2 } = animation;
-        [array[idx1], array[idx2]] = [array[idx2], array[idx1]];
-        break;
-      case "color":
-        for (let i = 0; i < animation.indeces.length; i++) {
-          array[animation.indeces[i]].color = animation.newColors[i];
-        }
-        break;
-      case "massColor":
-        const { startIdx, endIdx, newColor } = animation;
-        for (let i = startIdx; i <= endIdx; i++) {
-          array[i].color = newColor;
-        }
-        break;
-      case "assignHeightAndColor":
-        array[animation.index].barHeight = animation.newHeight;
-        array[animation.index].color = animation.newColor;
-        break;
-      default:
-        break;
-    }
+    const array = getForwardStepArray(
+      cloneArrayOfObjects(arrayBars),
+      animations.current[currentAnimation.current]
+    );
 
     currentAnimation.current++;
     setArrayBars(array);
-  }, [arrayBars]);
+  };
 
   const stepBackwardAnimation = () => {
     if (currentAnimation.current <= 0) return;
     currentAnimation.current--;
 
-    const array = cloneArrayOfObjects(arrayBars);
-    const animation = animations.current[currentAnimation.current];
-    switch (animation.type) {
-      case "swap":
-        const { idx1, idx2 } = animations.current[currentAnimation.current];
-        [array[idx1], array[idx2]] = [array[idx2], array[idx1]];
-        break;
-      case "assignHeight":
-        array[animation.index].barHeight = animation.oldHeight;
-        break;
-      default:
-        break;
-    }
+    const array = getBackStepArray(
+      cloneArrayOfObjects(arrayBars),
+      animations.current[currentAnimation.current]
+    );
 
     setArrayBars(array);
   };
