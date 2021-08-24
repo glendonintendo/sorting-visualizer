@@ -7,6 +7,7 @@ import Controller from "./components/Controller";
 import createArrayBars from "./utils/createArrayBars";
 import generateAnimations from "./utils/animationsGenerators";
 import cloneArrayOfObjects from "./utils/cloneArrayOfObjects";
+import getEndArrayState from "./utils/getEndArrayState";
 
 function App() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -17,6 +18,7 @@ function App() {
   const animations = useRef(generateAnimations(arrayBars, sortType));
   const currentAnimation = useRef(0);
   const beginArrayState = useRef(cloneArrayOfObjects(arrayBars));
+  const endArrayState = useRef(getEndArrayState(arrayBars));
   const { colorMode, toggleColorMode } = useColorMode();
 
   const generateArrayBars = () => {
@@ -24,6 +26,7 @@ function App() {
 
     setArrayBars(array);
     beginArrayState.current = cloneArrayOfObjects(array);
+    endArrayState.current = getEndArrayState(arrayBars);
     setIsPlaying(false);
     animations.current = generateAnimations(array, sortType);
     currentAnimation.current = 0;
@@ -52,8 +55,9 @@ function App() {
           array[i].color = newColor;
         }
         break;
-      case "assignHeight":
+      case "assignHeightAndColor":
         array[animation.index].barHeight = animation.newHeight;
+        array[animation.index].color = animation.newColor;
         break;
       default:
         break;
@@ -91,13 +95,9 @@ function App() {
   };
 
   const goToEnd = () => {
-    const array = cloneArrayOfObjects(arrayBars);
-    for (let i = currentAnimation.current; i < animations.current.length; i++) {
-      const { idx1, idx2 } = animations.current[i];
-      [array[idx1], array[idx2]] = [array[idx2], array[idx1]];
-    }
+    setArrayBars(cloneArrayOfObjects(endArrayState.current));
+    setIsPlaying(false);
     currentAnimation.current = animations.current.length;
-    setArrayBars(array);
   };
 
   const onArraySizeSliderChange = (value) => {
