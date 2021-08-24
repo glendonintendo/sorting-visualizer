@@ -46,6 +46,12 @@ function App() {
           array[animation.indeces[i]].color = animation.newColors[i];
         }
         break;
+      case "massColor":
+        const { startIdx, endIdx, newColor } = animation;
+        for (let i = startIdx; i <= endIdx; i++) {
+          array[i].color = newColor;
+        }
+        break;
       case "assignHeight":
         array[animation.index].barHeight = animation.newHeight;
         break;
