@@ -1,32 +1,29 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { generateAnimations } from "./utils/animationsGenerators";
 import { useColorMode } from "@chakra-ui/react";
 
 import Nav from "./components/Nav";
 import Visualizer from "./components/Visualizer";
 import Controller from "./components/Controller";
+import createArrayBars from "./utils/createArrayBars";
+import generateAnimations from "./utils/animationsGenerators";
+import cloneArrayOfObjects from "./utils/cloneArrayOfObjects";
 
 function App() {
-  const [arrayBars, setArrayBars] = useState([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [arraySize, setArraySize] = useState(30);
+  const [arrayBars, setArrayBars] = useState(createArrayBars(arraySize));
   const [sortType, setSortType] = useState("bubble");
   const [animationSpeed, setAnimationSpeed] = useState(50);
-  const animations = useRef([]);
+  const animations = useRef(generateAnimations(arrayBars, sortType));
   const currentAnimation = useRef(0);
+  const beginArrayState = useRef(cloneArrayOfObjects(arrayBars));
   const { colorMode, toggleColorMode } = useColorMode();
 
   const generateArrayBars = () => {
-    const array = [];
-    for (let i = 0; i < arraySize; i++) {
-      array.push({
-        barHeight: Math.floor(Math.random() * 96) + 5,
-        color: "blue",
-        key: i,
-      });
-    }
+    const array = createArrayBars(arraySize);
 
     setArrayBars(array);
+    beginArrayState.current = cloneArrayOfObjects(array);
     setIsPlaying(false);
     animations.current = generateAnimations(array, sortType);
     currentAnimation.current = 0;
@@ -37,21 +34,17 @@ function App() {
       setIsPlaying(false);
       return;
     }
-    let array = [...arrayBars];
+    let array = cloneArrayOfObjects(arrayBars);
     const animation = animations.current[currentAnimation.current];
     switch (animation.type) {
       case "swap":
-        const [idx1, idx2] = animation.indeces;
+        const { idx1, idx2 } = animation;
         [array[idx1], array[idx2]] = [array[idx2], array[idx1]];
         break;
       case "color":
-        array = array.map((barObj, i) => {
-          if (i === idx1 || i === idx2) {
-            const coloredBar = { ...barObj, color: "black" };
-            return coloredBar;
-          }
-          return { ...barObj, color: "blue" };
-        });
+        for (let i = 0; i < animation.indeces.length; i++) {
+          array[animation.indeces[i]].color = animation.newColors[i];
+        }
         break;
       case "assignHeight":
         array[animation.index].barHeight = animation.newHeight;
@@ -68,12 +61,11 @@ function App() {
     if (currentAnimation.current <= 0) return;
     currentAnimation.current--;
 
-    const array = [...arrayBars];
+    const array = cloneArrayOfObjects(arrayBars);
     const animation = animations.current[currentAnimation.current];
     switch (animation.type) {
       case "swap":
-        const [idx1, idx2] =
-          animations.current[currentAnimation.current].indeces;
+        const { idx1, idx2 } = animations.current[currentAnimation.current];
         [array[idx1], array[idx2]] = [array[idx2], array[idx1]];
         break;
       case "assignHeight":
@@ -87,20 +79,15 @@ function App() {
   };
 
   const goToStart = () => {
-    const array = [...arrayBars];
-    for (let i = currentAnimation.current - 1; i >= 0; i--) {
-      const [idx1, idx2] = animations.current[i].indeces;
-      [array[idx1], array[idx2]] = [array[idx2], array[idx1]];
-    }
-    currentAnimation.current = 0;
-    setArrayBars(array);
+    setArrayBars(cloneArrayOfObjects(beginArrayState.current));
     setIsPlaying(false);
+    currentAnimation.current = 0;
   };
 
   const goToEnd = () => {
-    const array = [...arrayBars];
+    const array = cloneArrayOfObjects(arrayBars);
     for (let i = currentAnimation.current; i < animations.current.length; i++) {
-      const [idx1, idx2] = animations.current[i].indeces;
+      const { idx1, idx2 } = animations.current[i];
       [array[idx1], array[idx2]] = [array[idx2], array[idx1]];
     }
     currentAnimation.current = animations.current.length;
@@ -128,10 +115,6 @@ function App() {
   };
 
   useEffect(() => {
-    generateArrayBars();
-  }, []);
-
-  useEffect(() => {
     if (isPlaying) {
       const animationTimer = setTimeout(stepForwardAnimation, animationSpeed);
 
@@ -141,7 +124,14 @@ function App() {
 
   useEffect(() => {
     generateArrayBars();
-  }, [arraySize, sortType]);
+  }, [arraySize]);
+
+  useEffect(() => {
+    setArrayBars(cloneArrayOfObjects(beginArrayState.current));
+    setIsPlaying(false);
+    animations.current = generateAnimations(beginArrayState.current, sortType);
+    currentAnimation.current = 0;
+  }, [sortType]);
 
   return (
     <>
