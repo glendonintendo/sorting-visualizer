@@ -57,8 +57,10 @@ const generateHeapSortAnimations = (array) => {
 
   animations.push({
     type: "massColor",
-    oldColor: ["orange"],
-    newColor: ["blue"],
+    startIdx: 0,
+    endIdx: dupArray.length - 1,
+    oldColor: "orange",
+    newColor: "blue",
   });
   for (let end = dupArray.length - 1; end > 0; end--) {
     animations.push({
