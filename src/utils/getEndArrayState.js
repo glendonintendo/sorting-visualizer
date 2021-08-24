@@ -1,7 +1,10 @@
+import cloneArrayOfObjects from "./cloneArrayOfObjects";
+
 const getEndArrayState = (array) => {
-  const dupArray = array.map((arrayBar) => {
-    return { ...arrayBar, color: "orange" };
-  });
+  const dupArray = cloneArrayOfObjects(array);
+  for (const arrayBar of dupArray) {
+    arrayBar.color = "orange";
+  }
   dupArray.sort((a, b) => a.barHeight - b.barHeight);
   return dupArray;
 };
