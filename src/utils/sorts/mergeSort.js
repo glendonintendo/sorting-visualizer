@@ -14,29 +14,49 @@ const mergeSortHelper = (array, start, end, auxiliary, animations) => {
   mergeSortHelper(auxiliary, start, mid, array, animations);
   mergeSortHelper(auxiliary, mid + 1, end, array, animations);
   merge(array, start, mid, end, auxiliary, animations);
+  if (end - start !== array.length - 1) {
+    animations.push({
+      type: "massColor",
+      startIdx: start,
+      endIdx: end,
+      oldColor: "orange",
+      newColor: "blue",
+    });
+  }
 };
 
 const merge = (array, start, mid, end, auxiliary, animations) => {
+  animations.push({
+    type: "massColor",
+    startIdx: start,
+    endIdx: end,
+    oldColor: "blue",
+    newColor: "red",
+  });
   let k = start;
   let i = start;
   let j = mid + 1;
   while (i <= mid && j <= end) {
     if (auxiliary[i].barHeight <= auxiliary[j].barHeight) {
       animations.push({
-        type: "assignHeight",
+        type: "assignHeightAndColor",
         index: k,
         newHeight: auxiliary[i].barHeight,
         oldHeight: auxiliary[k].barHeight,
+        oldColor: "red",
+        newColor: "orange",
       });
       array[k] = auxiliary[i];
       k++;
       i++;
     } else {
       animations.push({
-        type: "assignHeight",
+        type: "assignHeightAndColor",
         index: k,
         newHeight: auxiliary[j].barHeight,
         oldHeight: auxiliary[k].barHeight,
+        oldColor: "red",
+        newColor: "orange",
       });
       array[k] = auxiliary[j];
       k++;
@@ -46,10 +66,12 @@ const merge = (array, start, mid, end, auxiliary, animations) => {
 
   while (i <= mid) {
     animations.push({
-      type: "assignHeight",
+      type: "assignHeightAndColor",
       index: k,
       newHeight: auxiliary[i].barHeight,
       oldHeight: auxiliary[k].barHeight,
+      oldColor: "red",
+      newColor: "orange",
     });
     array[k] = auxiliary[i];
     k++;
@@ -58,10 +80,12 @@ const merge = (array, start, mid, end, auxiliary, animations) => {
 
   while (j <= end) {
     animations.push({
-      type: "assignHeight",
+      type: "assignHeightAndColor",
       index: k,
       newHeight: auxiliary[j].barHeight,
       oldHeight: auxiliary[k].barHeight,
+      oldColor: "red",
+      newColor: "orange",
     });
     array[k] = auxiliary[j];
     k++;
