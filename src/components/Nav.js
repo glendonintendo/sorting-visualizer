@@ -1,5 +1,5 @@
 import { IoCellular, IoInformation } from "react-icons/io5";
-import { BiRun } from "react-icons/bi"
+import { BiRun } from "react-icons/bi";
 import {
   Flex,
   Box,
@@ -9,6 +9,7 @@ import {
   SliderFilledTrack,
   SliderThumb,
   HStack,
+  Tooltip,
   useDisclosure,
 } from "@chakra-ui/react";
 
@@ -22,7 +23,7 @@ const Nav = ({
   animationSpeed,
   sortType,
   onSelectSortType,
-  colorMode
+  colorMode,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -35,7 +36,7 @@ const Nav = ({
       justifyContent={["space-between", "space-around"]}
     >
       <Slider
-        aria-label="array size slider"
+        aria-label="data set size slider"
         min={10}
         max={60}
         step={1}
@@ -48,13 +49,18 @@ const Nav = ({
         <SliderTrack>
           <SliderFilledTrack />
         </SliderTrack>
-        <SliderThumb boxSize={[6, 8, 8]} bg={colorMode === "light" ? "green.500" : "green.200"}>
-          <Box
-            as={IoCellular}
-            color={colorMode === "light" ? "gray.200" : "gray.500"}
-            fontSize={{ base: "16px", md: "24px", lg: "24px" }}
-          />
-        </SliderThumb>
+        <Tooltip hasArrow label="data set size" bg="gray.300" color="black">
+          <SliderThumb
+            boxSize={[6, 8, 8]}
+            bg={colorMode === "light" ? "green.500" : "green.200"}
+          >
+            <Box
+              as={IoCellular}
+              color={colorMode === "light" ? "gray.200" : "gray.500"}
+              fontSize={{ base: "16px", md: "24px", lg: "24px" }}
+            />
+          </SliderThumb>
+        </Tooltip>
       </Slider>
       <Slider
         aria-label="visualization speed slider"
@@ -70,27 +76,35 @@ const Nav = ({
         <SliderTrack>
           <SliderFilledTrack />
         </SliderTrack>
-        <SliderThumb boxSize={[6, 8, 8]} bg={colorMode === "light" ? "green.500" : "green.200"}>
-          <Box
-            as={BiRun}
-            color={colorMode === "light" ? "gray.200" : "gray.500"}
-            fontSize={{ base: "18px", md: "28px", lg: "28px" }}
-          />
-        </SliderThumb>
+        <Tooltip hasArrow label="animation speed" bg="gray.300" color="black">
+          <SliderThumb
+            boxSize={[6, 8, 8]}
+            bg={colorMode === "light" ? "green.500" : "green.200"}
+          >
+            <Box
+              as={BiRun}
+              color={colorMode === "light" ? "gray.200" : "gray.500"}
+              fontSize={{ base: "18px", md: "28px", lg: "28px" }}
+            />
+          </SliderThumb>
+        </Tooltip>
       </Slider>
 
       <HStack>
-        <IconButton
-          aria-label="Additional sort information"
-          icon={<IoInformation />}
-          size="2xs"
-          borderRadius="50%"
-          border="transparent"
-          colorScheme="blue"
-          fontSize="20px"
-          mr={["1px", "2px", "5px", "5px"]}
-          onClick={onOpen}
-        />
+        <Tooltip hasArrow label="sort info" bg="gray.300" color="black">
+          <IconButton
+            aria-label="Additional sort information"
+            icon={<IoInformation />}
+            size="2xs"
+            borderRadius="50%"
+            border="transparent"
+            colorScheme="blue"
+            fontSize="20px"
+            mr={["1px", "2px", "5px", "5px"]}
+            onClick={onOpen}
+          />
+        </Tooltip>
+
         <SortInfoModal onClose={onClose} isOpen={isOpen} sortType={sortType} />
         <Box w={["25vw", "25vw", "16vw", "10vw"]} maxWidth="200px">
           <SortTypeSelect

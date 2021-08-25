@@ -1,4 +1,4 @@
-import { Flex, IconButton, HStack } from "@chakra-ui/react";
+import { Flex, IconButton, HStack, Tooltip } from "@chakra-ui/react";
 import { FaAsterisk } from "react-icons/fa";
 import {
   IoPlaySkipBack,
@@ -26,19 +26,23 @@ const Controller = ({
   generateArrayBars,
 }) => {
   const playPauseButton = isPlaying ? (
-    <IconButton
-      aria-label="Pause visualizer"
-      onClick={pauseAnimations}
-      icon={<IoPause />}
-      colorScheme="blue"
-    />
+    <Tooltip hasArrow label="pause" bg="gray.300" color="black">
+      <IconButton
+        aria-label="Pause visualizer"
+        onClick={pauseAnimations}
+        icon={<IoPause />}
+        colorScheme="blue"
+      />
+    </Tooltip>
   ) : (
-    <IconButton
-      aria-label="Play visualizer"
-      onClick={playAnimations}
-      icon={<IoPlay />}
-      colorScheme="blue"
-    />
+    <Tooltip hasArrow label="play" bg="gray.300" color="black">
+      <IconButton
+        aria-label="Play visualizer"
+        onClick={playAnimations}
+        icon={<IoPlay />}
+        colorScheme="blue"
+      />
+    </Tooltip>
   );
 
   return (
@@ -49,54 +53,75 @@ const Controller = ({
       mx="auto"
       justify="space-between"
     >
-      <IconButton
-        aria-label="Create new data set"
-        onClick={generateArrayBars}
-        icon={<FaAsterisk />}
-        colorScheme="blue"
-        fontSize="24px"
-        isDisabled={isPlaying}
-      ></IconButton>
+      <Tooltip hasArrow label="new data set" bg="gray.300" color="black">
+        <IconButton
+          aria-label="Create new data set"
+          onClick={generateArrayBars}
+          icon={<FaAsterisk />}
+          colorScheme="blue"
+          fontSize="24px"
+          isDisabled={isPlaying}
+        ></IconButton>
+      </Tooltip>
 
       <HStack spacing={{ base: "8px", md: "20px", lg: "40px" }}>
-        <IconButton
-          aria-label="Skip to first animation"
-          onClick={goToStart}
-          icon={<IoPlaySkipBack />}
-          colorScheme="blue"
-        />
-        <IconButton
-          aria-label="Step back one animation"
-          onClick={stepBackwardAnimation}
-          icon={<IoChevronBack />}
-          colorScheme="blue"
-          isDisabled={isPlaying || currentAnimation === 0}
-        />
+        <Tooltip hasArrow label="skip to beginning" bg="gray.300" color="black">
+          <IconButton
+            aria-label="Skip to first animation"
+            onClick={goToStart}
+            icon={<IoPlaySkipBack />}
+            colorScheme="blue"
+          />
+        </Tooltip>
+
+        <Tooltip hasArrow label="step backward" bg="gray.300" color="black">
+          <IconButton
+            aria-label="Step back one animation"
+            onClick={stepBackwardAnimation}
+            icon={<IoChevronBack />}
+            colorScheme="blue"
+            isDisabled={isPlaying || currentAnimation === 0}
+          />
+        </Tooltip>
+
         {playPauseButton}
-        <IconButton
-          aria-label="Step forward one animation"
-          onClick={stepForwardAnimation}
-          icon={<IoChevronForward />}
-          colorScheme="blue"
-          isDisabled={isPlaying || currentAnimation >= animations.length}
-        />
-        <IconButton
-          aria-label="Skip to last animation"
-          onClick={goToEnd}
-          icon={<IoPlaySkipForward />}
-          colorScheme="blue"
-        />
+
+        <Tooltip hasArrow label="step forward" bg="gray.300" color="black">
+          <IconButton
+            aria-label="Step forward one animation"
+            onClick={stepForwardAnimation}
+            icon={<IoChevronForward />}
+            colorScheme="blue"
+            isDisabled={isPlaying || currentAnimation >= animations.length}
+          />
+        </Tooltip>
+
+        <Tooltip hasArrow label="skip to end" bg="gray.300" color="black">
+          <IconButton
+            aria-label="Skip to last animation"
+            onClick={goToEnd}
+            icon={<IoPlaySkipForward />}
+            colorScheme="blue"
+          />
+        </Tooltip>
       </HStack>
 
-      <IconButton
-        aria-label={`Toggle to ${
-          colorMode === "light" ? "dark" : "light"
-        } mode`}
-        onClick={toggleColorMode}
-        icon={colorMode === "light" ? <IoMoon /> : <IoSunny />}
-        colorScheme="blue"
-        fontSize="24px"
-      ></IconButton>
+      <Tooltip
+        hasArrow
+        label={`toggle ${colorMode === "light" ? "dark" : "light"} mode`}
+        bg="gray.300"
+        color="black"
+      >
+        <IconButton
+          aria-label={`Toggle to ${
+            colorMode === "light" ? "dark" : "light"
+          } mode`}
+          onClick={toggleColorMode}
+          icon={colorMode === "light" ? <IoMoon /> : <IoSunny />}
+          colorScheme="blue"
+          fontSize="24px"
+        ></IconButton>
+      </Tooltip>
     </Flex>
   );
 };
