@@ -77,6 +77,7 @@ const Controller = ({
             onClick={goToStart}
             icon={<IoPlaySkipBack />}
             colorScheme="blue"
+            isDisabled={currentAnimation === 0}
           />
         </Tooltip>
 
@@ -108,6 +109,7 @@ const Controller = ({
             onClick={goToEnd}
             icon={<IoPlaySkipForward />}
             colorScheme="blue"
+            isDisabled={currentAnimation >= animations.length}
           />
         </Tooltip>
       </HStack>
