@@ -11,6 +11,8 @@ import {
   IoMoon,
 } from "react-icons/io5";
 
+import OptionsMenu from "./OptionsMenu";
+
 const Controller = ({
   stepForwardAnimation,
   playAnimations,
@@ -63,6 +65,10 @@ const Controller = ({
           isDisabled={isPlaying}
         ></IconButton>
       </Tooltip>
+
+      {/* <Tooltip hasArrow label="data set options" bg="gray.300" color="black">
+        <OptionsMenu />
+      </Tooltip> */}
 
       <HStack spacing={{ base: "8px", md: "20px", lg: "40px" }}>
         <Tooltip hasArrow label="skip to beginning" bg="gray.300" color="black">
