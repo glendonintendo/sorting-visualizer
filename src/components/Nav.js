@@ -81,6 +81,7 @@ const Nav = ({
 
       <HStack>
         <IconButton
+          aria-label="Additional sort information"
           icon={<IoInformation />}
           size="2xs"
           borderRadius="50%"
