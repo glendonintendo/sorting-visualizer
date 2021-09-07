@@ -4,17 +4,18 @@ import { useColorMode } from "@chakra-ui/react";
 import Nav from "./components/Nav";
 import Visualizer from "./components/Visualizer";
 import Controller from "./components/Controller";
-import createArrayBars from "./utils/createArrayBars";
-import generateAnimations from "./utils/animationsGenerators";
+import generateArrayBars from "./utils/generateArrayBars";
+import generateAnimations from "./utils/generateAnimations";
 import cloneArrayOfObjects from "./utils/cloneArrayOfObjects";
 import getEndArrayState from "./utils/getEndArrayState";
 import getForwardStepArray from "./utils/getForwardStepArray";
 import getBackStepArray from "./utils/getBackStepArray";
+import randomizeArray from "./utils/randomizeArray";
 
 function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [arraySize, setArraySize] = useState(30);
-  const [arrayBars, setArrayBars] = useState(createArrayBars(arraySize));
+  const [arrayBars, setArrayBars] = useState(generateArrayBars(arraySize));
   const [sortType, setSortType] = useState("bubble");
   const [animationSpeed, setAnimationSpeed] = useState(50);
   const animations = useRef(generateAnimations(arrayBars, sortType));
@@ -23,8 +24,8 @@ function App() {
   const endArrayState = useRef(getEndArrayState(arrayBars));
   const { colorMode, toggleColorMode } = useColorMode();
 
-  const generateArrayBars = () => {
-    const array = createArrayBars(arraySize);
+  const initializeArrayState = () => {
+    const array = generateArrayBars(arraySize);
 
     setArrayBars(array);
     beginArrayState.current = cloneArrayOfObjects(array);
@@ -92,6 +93,17 @@ function App() {
     setIsPlaying(false);
   };
 
+  const shuffleArrayBars = () => {
+    const array = randomizeArray(beginArrayState.current);
+
+    setArrayBars(array);
+    beginArrayState.current = cloneArrayOfObjects(array);
+    endArrayState.current = getEndArrayState(array);
+    setIsPlaying(false);
+    animations.current = generateAnimations(array, sortType);
+    currentAnimation.current = 0;
+  };
+
   useEffect(() => {
     if (isPlaying) {
       const animationTimer = setTimeout(stepForwardAnimation, animationSpeed);
@@ -101,7 +113,7 @@ function App() {
   }, [isPlaying, arrayBars, stepForwardAnimation]);
 
   useEffect(() => {
-    generateArrayBars();
+    initializeArrayState();
   }, [arraySize]);
 
   useEffect(() => {
@@ -137,9 +149,10 @@ function App() {
         isPlaying={isPlaying}
         currentAnimation={currentAnimation.current}
         animations={animations.current}
-        generateArrayBars={generateArrayBars}
+        initializeArrayState={initializeArrayState}
         toggleColorMode={toggleColorMode}
         colorMode={colorMode}
+        shuffleArrayBars={shuffleArrayBars}
       />
     </>
   );

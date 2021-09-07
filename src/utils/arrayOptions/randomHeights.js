@@ -1,4 +1,4 @@
-const createArrayBars = (arraySize) => {
+const generateRandomArray = (arraySize) => {
   const array = [];
 
   for (let i = 0; i < arraySize; i++) {
@@ -12,4 +12,4 @@ const createArrayBars = (arraySize) => {
   return array;
 };
 
-export default createArrayBars;
+export default generateRandomArray;
