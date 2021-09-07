@@ -1,5 +1,6 @@
 import { Flex, IconButton, HStack, Tooltip } from "@chakra-ui/react";
 import { FaAsterisk } from "react-icons/fa";
+import { ImShuffle } from "react-icons/im";
 import {
   IoPlaySkipBack,
   IoChevronBack,
@@ -25,7 +26,8 @@ const Controller = ({
   isPlaying,
   toggleColorMode,
   colorMode,
-  generateArrayBars,
+  initializeArrayState,
+  shuffleArrayBars,
 }) => {
   const playPauseButton = isPlaying ? (
     <Tooltip hasArrow label="pause" bg="gray.300" color="black">
@@ -58,7 +60,7 @@ const Controller = ({
       <Tooltip hasArrow label="new data set" bg="gray.300" color="black">
         <IconButton
           aria-label="Create new data set"
-          onClick={generateArrayBars}
+          onClick={initializeArrayState}
           icon={<FaAsterisk />}
           colorScheme="blue"
           fontSize="24px"
@@ -66,9 +68,19 @@ const Controller = ({
         ></IconButton>
       </Tooltip>
 
-      {/* <Tooltip hasArrow label="data set options" bg="gray.300" color="black">
-        <OptionsMenu />
-      </Tooltip> */}
+      <Tooltip hasArrow label="shuffle data set" bg="gray.300" color="black">
+        <IconButton
+          aria-label="Shuffle current data set"
+          onClick={shuffleArrayBars}
+          icon={<ImShuffle />}
+          colorScheme="blue"
+          fontSize="24px"
+          isDisabled={isPlaying}
+          transform="rotate(-90deg)"
+        ></IconButton>
+      </Tooltip>
+
+      <OptionsMenu />
 
       <HStack spacing={{ base: "8px", md: "20px", lg: "40px" }}>
         <Tooltip hasArrow label="skip to beginning" bg="gray.300" color="black">
