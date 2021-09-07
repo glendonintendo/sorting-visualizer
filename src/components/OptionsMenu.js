@@ -34,7 +34,7 @@ const OptionsMenu = ({
       ></MenuButton>
       <MenuList>
         <MenuItem icon={<FaAsterisk />} onClick={initializeArrayState}>
-          Create New Data Set
+          Create New Data
         </MenuItem>
         <MenuItem icon={<ImShuffle />} onClick={shuffleArrayBars}>
           Shuffle Current Data
@@ -51,7 +51,7 @@ const OptionsMenu = ({
         </MenuOptionGroup>
         <MenuOptionGroup
           defaultValue="random"
-          title="Sorted Order"
+          title="Initial Order"
           type="radio"
           onChange={sortedOrderOnChange}
         >
