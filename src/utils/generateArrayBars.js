@@ -1,12 +1,46 @@
-import generateRandomArray from "./arrayOptions/randomHeights";
+import generateRandomHeights from "./arrayOptions/randomHeights";
+import generateEqualStepHeights from "./arrayOptions/equalStep";
+import generateHomogenousHeights from "./arrayOptions/homogenous";
+import randomizeArray from "./arrayOptions/randomOrder";
+import nearlySortArray from "./arrayOptions/nearlySorted";
+import reverseSortArray from "./arrayOptions/reverseSorted";
 
-const generateArrayBars = (array, arrayType="random", sortedOrder="random") => {
-  switch (arrayType) {
+const generateArrayBars = (
+  arraySize,
+  barHeights = "random",
+  sortedOrder = "random"
+) => {
+  let array = [];
+
+  switch (barHeights) {
     case "random":
-      return generateRandomArray(array);
+      generateRandomHeights(array, arraySize);
+      break;
+    case "equal-step":
+      generateEqualStepHeights(array, arraySize);
+      break;
+    case "homogenous":
+      generateHomogenousHeights(array, arraySize);
+      break;
     default:
-      return;
+      break;
   }
+
+  switch (sortedOrder) {
+    case "random":
+      randomizeArray(array);
+      break;
+    case "nearly-sorted":
+      nearlySortArray(array);
+      break;
+    case "reverse-sorted":
+      reverseSortArray(array);
+      break;
+    default:
+      break;
+  }
+
+  return array;
 };
 
 export default generateArrayBars;

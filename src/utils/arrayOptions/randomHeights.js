@@ -1,6 +1,4 @@
-const generateRandomArray = (arraySize) => {
-  const array = [];
-
+const generateRandomHeights = (array, arraySize) => {
   for (let i = 0; i < arraySize; i++) {
     array.push({
       barHeight: Math.floor(Math.random() * 96) + 5,
@@ -12,4 +10,4 @@ const generateRandomArray = (arraySize) => {
   return array;
 };
 
-export default generateRandomArray;
+export default generateRandomHeights;
