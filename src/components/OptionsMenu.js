@@ -1,34 +1,22 @@
-import { Menu, MenuButton, MenuList, MenuItem, IconButton } from "@chakra-ui/react";
+import { Menu, MenuButton, MenuList, IconButton, MenuOptionGroup, MenuItemOption } from "@chakra-ui/react";
 import { IoChevronUp } from "react-icons/io5";
-import { FaDiceThree } from "react-icons/fa"
-import {ImShuffle} from "react-icons/im"
-
 
 const OptionsMenu = () => {
   return (
-    <Menu>
-      <MenuButton
-        as={IconButton}
-        aria-label="Data Set Options"
-        icon={<IoChevronUp />}
-        variant="outline"
-      />
+    <Menu closeOnSelect={false}>
+      <MenuButton as={IconButton} icon={<IoChevronUp />} variant="outline">
+      </MenuButton>
       <MenuList>
-        <MenuItem icon={<FaDiceThree />}>
-          New Random Data Set
-        </MenuItem>
-        <MenuItem>
-          New Nearly Sorted Data Set
-        </MenuItem>
-        <MenuItem>
-          New Few Unique Values Data Set
-        </MenuItem>
-        <MenuItem>
-          New Reverse Sorted Data Set
-        </MenuItem>
-        <MenuItem icon={<ImShuffle />}>
-          Shuffle Current Data Set
-        </MenuItem>
+        <MenuOptionGroup defaultValue="random" title="Bar Sizes" type="radio">
+          <MenuItemOption value="random">Random</MenuItemOption>
+          <MenuItemOption value="equal-step">Equal Step</MenuItemOption>
+          <MenuItemOption value="homogenous">Homogenous</MenuItemOption>
+        </MenuOptionGroup>
+        <MenuOptionGroup defaultValue="random" title="Sorted Order" type="radio">
+          <MenuItemOption value="random">Random</MenuItemOption>
+          <MenuItemOption value="nearly-sorted">Nearly Sorted</MenuItemOption>
+          <MenuItemOption value="reverse-sorted">Reverse Sorted</MenuItemOption>
+        </MenuOptionGroup>
       </MenuList>
     </Menu>
   );
