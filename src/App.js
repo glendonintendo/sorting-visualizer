@@ -10,7 +10,7 @@ import cloneArrayOfObjects from "./utils/cloneArrayOfObjects";
 import getEndArrayState from "./utils/getEndArrayState";
 import getForwardStepArray from "./utils/getForwardStepArray";
 import getBackStepArray from "./utils/getBackStepArray";
-import randomizeArray from "./utils/randomizeArray";
+import randomizeArray from "./utils/arrayOptions/getRandomOrder";
 
 function App() {
   const [isPlaying, setIsPlaying] = useState(false);
