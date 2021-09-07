@@ -10,7 +10,7 @@ import cloneArrayOfObjects from "./utils/cloneArrayOfObjects";
 import getEndArrayState from "./utils/getEndArrayState";
 import getForwardStepArray from "./utils/getForwardStepArray";
 import getBackStepArray from "./utils/getBackStepArray";
-import randomizeArray from "./utils/arrayOptions/getRandomOrder";
+import randomizeArray from "./utils/arrayOptions/randomOrder";
 
 function App() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -22,10 +22,16 @@ function App() {
   const currentAnimation = useRef(0);
   const beginArrayState = useRef(cloneArrayOfObjects(arrayBars));
   const endArrayState = useRef(getEndArrayState(arrayBars));
+  const barHeights = useRef("random");
+  const sortedOrder = useRef("random");
   const { colorMode, toggleColorMode } = useColorMode();
 
   const initializeArrayState = () => {
-    const array = generateArrayBars(arraySize);
+    const array = generateArrayBars(
+      arraySize,
+      barHeights.current,
+      sortedOrder.current
+    );
 
     setArrayBars(array);
     beginArrayState.current = cloneArrayOfObjects(array);
@@ -104,6 +110,14 @@ function App() {
     currentAnimation.current = 0;
   };
 
+  const setBarHeights = (newBarHeights) => {
+    barHeights.current = newBarHeights;
+  };
+
+  const setSortedOrder = (newSortedOrder) => {
+    sortedOrder.current = newSortedOrder;
+  };
+
   useEffect(() => {
     if (isPlaying) {
       const animationTimer = setTimeout(stepForwardAnimation, animationSpeed);
@@ -153,6 +167,8 @@ function App() {
         toggleColorMode={toggleColorMode}
         colorMode={colorMode}
         shuffleArrayBars={shuffleArrayBars}
+        setBarHeights={setBarHeights}
+        setSortedOrder={setSortedOrder}
       />
     </>
   );

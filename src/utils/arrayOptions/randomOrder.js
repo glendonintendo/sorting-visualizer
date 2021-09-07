@@ -6,6 +6,6 @@ const randomizeArray = (array) => {
     swap(array, i, randIdx);
   }
   return array;
-}
+};
 
 export default randomizeArray;

@@ -1,6 +1,4 @@
 import { Flex, IconButton, HStack, Tooltip } from "@chakra-ui/react";
-import { FaAsterisk } from "react-icons/fa";
-import { ImShuffle } from "react-icons/im";
 import {
   IoPlaySkipBack,
   IoChevronBack,
@@ -28,6 +26,8 @@ const Controller = ({
   colorMode,
   initializeArrayState,
   shuffleArrayBars,
+  setBarHeights,
+  setSortedOrder,
 }) => {
   const playPauseButton = isPlaying ? (
     <Tooltip hasArrow label="pause" bg="gray.300" color="black">
@@ -57,30 +57,12 @@ const Controller = ({
       mx="auto"
       justify="space-between"
     >
-      <Tooltip hasArrow label="new data set" bg="gray.300" color="black">
-        <IconButton
-          aria-label="Create new data set"
-          onClick={initializeArrayState}
-          icon={<FaAsterisk />}
-          colorScheme="blue"
-          fontSize="24px"
-          isDisabled={isPlaying}
-        ></IconButton>
-      </Tooltip>
-
-      <Tooltip hasArrow label="shuffle data set" bg="gray.300" color="black">
-        <IconButton
-          aria-label="Shuffle current data set"
-          onClick={shuffleArrayBars}
-          icon={<ImShuffle />}
-          colorScheme="blue"
-          fontSize="24px"
-          isDisabled={isPlaying}
-          transform="rotate(-90deg)"
-        ></IconButton>
-      </Tooltip>
-
-      <OptionsMenu />
+      <OptionsMenu
+        initializeArrayState={initializeArrayState}
+        shuffleArrayBars={shuffleArrayBars}
+        setBarHeights={setBarHeights}
+        setSortedOrder={setSortedOrder}
+      />
 
       <HStack spacing={{ base: "8px", md: "20px", lg: "40px" }}>
         <Tooltip hasArrow label="skip to beginning" bg="gray.300" color="black">
