@@ -45,6 +45,7 @@ const Controller = ({
         onClick={playAnimations}
         icon={<IoPlay />}
         colorScheme="blue"
+        isDisabled={currentAnimation >= animations.length}
       />
     </Tooltip>
   );
