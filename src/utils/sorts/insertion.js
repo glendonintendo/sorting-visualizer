@@ -28,7 +28,7 @@ const generateInsertionSortAnimations = (array) => {
         oldColors: ["orange"],
         newColors: ["green"],
       });
-      if (dupArray[j].barHeight > dupArray[j - 1].barHeight) {
+      if (dupArray[j].barHeight >= dupArray[j - 1].barHeight) {
         animations.push({
           type: "color",
           indeces: [j, j - 1],
