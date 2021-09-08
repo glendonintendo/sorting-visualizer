@@ -1,4 +1,4 @@
-import { Text, StatHelpText, StatNumber } from "@chakra-ui/react";
+import { Text, StatHelpText, StatNumber, Link } from "@chakra-ui/react";
 
 const sortInfo = {
   bubble: {
@@ -220,6 +220,48 @@ copy elements back to original array`,
           case time complexity of O(n*log(n)) is generally used because the
           worst case time complexity is nearly impossible to get on large input
           sizes.
+        </Text>
+      </>
+    ),
+    code: `for each (unsorted) partition
+  set first element as pivot
+  storeIndex = pivotIndex + 1
+  for i = pivotIndex + 1 to rightmostIndex
+    if element[i] < element[pivot]
+      swap(i, storeIndex); storeIndex++
+  swap(pivot, storeIndex - 1)`,
+    timeComplexity: (
+      <>
+        <StatNumber>O(n*log(n))</StatNumber>
+        <StatHelpText>average case</StatHelpText>
+      </>
+    ),
+    spaceComplexity: <StatNumber>O(log(n))</StatNumber>,
+    badges: ["in-place", "fast"],
+  },
+  "dutch-flag": {
+    title: "Dutch Flag",
+    description: (
+      <>
+        <Text>
+          The Dutch Flag sort is a variation of quick sort derived from the{" "}
+          <Link
+            href="https://en.wikipedia.org/wiki/Dutch_national_flag_problem"
+            isExternal
+          >
+            Dutch National Flag
+          </Link>{" "}
+          problem proposed by Edsger Dijkstra. The Dutch Flag sort differs from
+          other implementations of Quick Sort by partitioning subarrays into
+          three parts: elements lower, equal to, and higher than the pivot.
+        </Text>
+        <Text>
+          The asymtotic time and space complexity does not differ from quick
+          sort. However, a three-partition sort will perform better on datasets
+          that have many repeating values. For example, if an array of all equal
+          values is sorted with both sorts, the Dutch Flag sort will make only a
+          single pass on the array, while the two partition sort will make n
+          passes, where n is the length of the array.
         </Text>
       </>
     ),

@@ -15,6 +15,7 @@ const SortTypeSelect = ({ sortType, onSelectSortType }) => {
       <option value="heap">Heap</option>
       <option value="merge">Merge</option>
       <option value="quick">Quick</option>
+      <option value="dutch-flag">Dutch Flag</option>
     </Select>
   );
 };
