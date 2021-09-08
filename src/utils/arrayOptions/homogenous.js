@@ -3,7 +3,7 @@ const generateHomogenousHeights = (array, arraySize) => {
 
   for (let i = 0; i < arraySize; i++) {
     let barHeight;
-    if (Math.random() < 0.5) barHeight = currHeight;
+    if (Math.random() < 0.6) barHeight = currHeight;
     else {
       barHeight = Math.floor(Math.random() * 96) + 5;
       currHeight = barHeight;
