@@ -4,6 +4,7 @@ import generateInsertionSortAnimations from "./sorts/insertion";
 import generateHeapSortAnimations from "./sorts/heap";
 import generateMergeSortAnimations from "./sorts/merge";
 import generateQuickSortAnimations from "./sorts/quick";
+import generateDutchFlagAnimations from "./sorts/dutchFlag";
 
 const generateAnimations = (array, sortType) => {
   switch (sortType) {
@@ -19,6 +20,8 @@ const generateAnimations = (array, sortType) => {
       return generateMergeSortAnimations(array);
     case "quick":
       return generateQuickSortAnimations(array);
+    case "dutch-flag":
+      return generateDutchFlagAnimations(array);
     default:
       return;
   }

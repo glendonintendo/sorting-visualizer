@@ -18,15 +18,16 @@ function App() {
   const [arrayBars, setArrayBars] = useState(generateArrayBars(arraySize));
   const [sortType, setSortType] = useState("bubble");
   const [animationSpeed, setAnimationSpeed] = useState(50);
-  const animations = useRef(generateAnimations(arrayBars, sortType));
+  const animations = useRef([]);
   const currentAnimation = useRef(0);
-  const beginArrayState = useRef(cloneArrayOfObjects(arrayBars));
-  const endArrayState = useRef(getEndArrayState(arrayBars));
+  const beginArrayState = useRef([]);
+  const endArrayState = useRef([]);
   const barHeights = useRef("random");
   const sortedOrder = useRef("random");
   const { colorMode, toggleColorMode } = useColorMode();
 
   const initializeArrayState = () => {
+    console.log("initialize");
     const array = generateArrayBars(
       arraySize,
       barHeights.current,
@@ -46,6 +47,7 @@ function App() {
       setIsPlaying(false);
       return;
     }
+    console.log(animations.current[currentAnimation.current]);
     const array = getForwardStepArray(
       cloneArrayOfObjects(arrayBars),
       animations.current[currentAnimation.current]
