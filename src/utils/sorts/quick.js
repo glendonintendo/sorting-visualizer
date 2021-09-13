@@ -71,7 +71,19 @@ const partition = (array, start, end, animations) => {
       array[leftIdx].barHeight > pivVal &&
       array[rightIdx].barHeight < pivVal
     ) {
+      animations.push({
+        type: "color",
+        indeces: [leftIdx, rightIdx],
+        oldColors: ["green", "green"],
+        newColors: ["red", "red"],
+      });
       animations.push({ type: "swap", idx1: rightIdx, idx2: leftIdx });
+      animations.push({
+        type: "color",
+        indeces: [leftIdx, rightIdx],
+        oldColors: ["red", "red"],
+        newColors: ["green", "green"],
+      });
       swap(array, rightIdx, leftIdx);
     }
 
