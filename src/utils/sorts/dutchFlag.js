@@ -37,26 +37,35 @@ const partition = (array, start, end, animations) => {
     return;
   }
   const randIdx = Math.floor(Math.random() * (end - start) + start);
-  animations.push({
-    type: "color",
-    indeces: [randIdx],
-    oldColors: ["blue"],
-    newColors: ["red"],
-  });
-  animations.push({
-    type: "color",
-    indeces: [start],
-    oldColors: ["blue"],
-    newColors: ["green"],
-  });
-  animations.push({ type: "swap", idx1: start, idx2: randIdx });
-  swap(array, start, randIdx);
-  animations.push({
-    type: "color",
-    indeces: [randIdx],
-    oldColors: ["green"],
-    newColors: ["blue"],
-  });
+  if (randIdx === start) {
+    animations.push({
+      type: "color",
+      indeces: [start],
+      oldColors: ["blue"],
+      newColors: ["red"],
+    });
+  } else {
+    animations.push({
+      type: "color",
+      indeces: [randIdx],
+      oldColors: ["blue"],
+      newColors: ["red"],
+    });
+    animations.push({
+      type: "color",
+      indeces: [start],
+      oldColors: ["blue"],
+      newColors: ["green"],
+    });
+    animations.push({ type: "swap", idx1: start, idx2: randIdx });
+    swap(array, start, randIdx);
+    animations.push({
+      type: "color",
+      indeces: [randIdx],
+      oldColors: ["green"],
+      newColors: ["blue"],
+    });
+  }
 
   const pivVal = array[start].barHeight;
   let firstDup = start + 1;
@@ -73,37 +82,97 @@ const partition = (array, start, end, animations) => {
       if (i !== firstLarger) {
         animations.push({
           type: "color",
-          indeces: [firstLarger],
-          oldColors: ["blue"],
-          newColors: ["green"],
+          indeces: [i, firstLarger],
+          oldColors: ["green", "blue"],
+          newColors: ["red", "red"],
         });
         animations.push({ type: "swap", idx1: i, idx2: firstLarger });
-        swap(array, i, firstLarger);
         animations.push({
           type: "color",
-          indeces: [firstLarger],
-          oldColors: ["blue"],
-          newColors: ["green"],
+          indeces: [i, firstLarger],
+          oldColors: ["red", "red"],
+          newColors: ["blue", "blue"],
         });
-      } else if (i !== firstDup) {
-        
+      } else {
+        animations.push({
+          type: "color",
+          indeces: [i],
+          oldColors: ["green"],
+          newColors: ["blue"],
+        });
+      }
+      if (firstLarger !== firstDup) {
+        animations.push({
+          type: "color",
+          indeces: [firstLarger, firstDup],
+          oldColors: ["blue", "blue"],
+          newColors: ["red", "red"],
+        });
+        animations.push({ type: "swap", idx1: firstLarger, idx2: firstDup });
+        animations.push({
+          type: "color",
+          indeces: [firstLarger, firstDup],
+          oldColors: ["red", "red"],
+          newColors: ["blue", "blue"],
+        });
       }
 
+      swap(array, i, firstLarger);
       swap(array, firstLarger, firstDup);
       firstLarger++;
       firstDup++;
     } else if (array[i].barHeight === pivVal) {
+      if (i !== firstLarger) {
+        animations.push({
+          type: "color",
+          indeces: [i, firstLarger],
+          oldColors: ["green", "blue"],
+          newColors: ["red", "red"],
+        });
+        animations.push({ type: "swap", idx1: i, idx2: firstLarger });
+        animations.push({
+          type: "color",
+          indeces: [i, firstLarger],
+          oldColors: ["red", "red"],
+          newColors: ["blue", "blue"],
+        });
+      } else {
+        animations.push({
+          type: "color",
+          indeces: [i],
+          oldColors: ["green"],
+          newColors: ["blue"],
+        });
+      }
       swap(array, i, firstLarger);
-      animations.push({ type: "swap", idx1: i, idx2: firstLarger });
       firstLarger++;
+    } else {
+      animations.push({
+        type: "color",
+        indeces: [i],
+        oldColors: ["green"],
+        newColors: ["blue"],
+      });
     }
   }
 
+  animations.push({
+    type: "color",
+    indeces: [firstDup - 1],
+    oldColors: ["blue"],
+    newColors: ["red"],
+  });
   swap(array, start, firstDup - 1);
   animations.push({ type: "swap", idx1: start, idx2: firstDup - 1 });
   animations.push({
+    type: "color",
+    indeces: [start, firstDup - 1],
+    oldColors: ["red", "red"],
+    newColors: ["blue", "orange"],
+  });
+  animations.push({
     type: "massColor",
-    startIdx: firstDup - 1,
+    startIdx: firstDup,
     endIdx: firstLarger - 1,
     oldColor: "blue",
     newColor: "orange",
