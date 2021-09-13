@@ -1,3 +1,8 @@
+/**
+ * Fetches sort info and renders it to the info modal. 
+ * Modal open/close state is handled by ChakraUI.
+ */
+
 import {
   Modal,
   ModalOverlay,

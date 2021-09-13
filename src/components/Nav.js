@@ -1,3 +1,7 @@
+/**
+ * Container for components in the contoller at the top of the page. 
+ */
+
 import { IoCellular, IoInformation } from "react-icons/io5";
 import { BiRun } from "react-icons/bi";
 import {

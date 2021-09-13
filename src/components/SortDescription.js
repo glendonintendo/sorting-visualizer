@@ -1,3 +1,7 @@
+/**
+ * Renders description of sort to SortInfoModal.
+ */
+
 import {
   ModalHeader,
   ModalBody,

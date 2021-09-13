@@ -1,3 +1,8 @@
+/**
+ * A select drop down for the different sorts. Uses onSelectSortType
+ * to pass sortType state to App component.
+ */
+
 import { Select } from "@chakra-ui/react";
 
 const SortTypeSelect = ({ sortType, onSelectSortType }) => {

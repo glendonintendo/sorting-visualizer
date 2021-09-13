@@ -1,3 +1,16 @@
+/**
+ * The App component is one of the few stateful components in the application.
+ * App has three children: Nav (the controller at the top of the page),
+ * Visualizer (the main body that show the array bars and animations),
+ * and Controller (the main controller of the animation with additional options).
+ * 
+ * Each of the children "speak" to each other and therefor state for each of those
+ * components was lifted to App in order to pass information between those siblings.
+ * 
+ * The bulk of the animation logic also runs through the app component via the
+ * utility functions in the utils folder.
+ */
+
 import { useState, useEffect, useRef } from "react";
 import { useColorMode } from "@chakra-ui/react";
 

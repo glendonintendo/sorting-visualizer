@@ -1,3 +1,9 @@
+/**
+ * Creates the array bars data set from the user input parameters.
+ * This will make calls to the different helper functions in arrayOptions
+ * to create an array that matches the parameters.
+ */
+
 import generateRandomHeights from "./arrayOptions/randomHeights";
 import generateEqualStepHeights from "./arrayOptions/equalStep";
 import generateHomogenousHeights from "./arrayOptions/homogenous";

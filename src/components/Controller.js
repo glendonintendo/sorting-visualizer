@@ -1,3 +1,7 @@
+/**
+ * Container for components in the controller at the bottom of the page.
+ */
+
 import { Flex, IconButton, HStack, Tooltip } from "@chakra-ui/react";
 import {
   IoPlaySkipBack,

@@ -1,3 +1,8 @@
+/**
+ * getSortInfo holds data for the SortInfoModal and exports a function
+ * that retrieves the data of the selected sort. 
+ */
+
 import { Text, StatHelpText, StatNumber, Link } from "@chakra-ui/react";
 
 const sortInfo = {

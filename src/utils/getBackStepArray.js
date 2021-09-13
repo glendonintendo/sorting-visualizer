@@ -1,3 +1,9 @@
+/**
+ * getStepBackArray will take an array and animation,
+ * and return a new array that represents the what input array
+ * looks like after the animation.
+ */
+
 const getBackStepArray = (array, animation) => {
   switch (animation.type) {
     case "swap":

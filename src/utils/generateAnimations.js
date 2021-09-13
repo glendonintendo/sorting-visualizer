@@ -1,3 +1,9 @@
+/**
+ * Creates the animations array from the input array and the
+ * selected sort. Will make a call to the selected sort in the
+ * sorts directory to evaluate the animations.
+ */
+
 import generateBubbleSortAnimations from "./sorts/bubble";
 import generateSelectionSortAnimations from "./sorts/selection";
 import generateInsertionSortAnimations from "./sorts/insertion";

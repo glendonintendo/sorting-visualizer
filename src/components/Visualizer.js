@@ -1,3 +1,7 @@
+/**
+ * Receives arrayBars from App to render bars on the page (stateless).
+ */
+
 import { Flex, Box } from "@chakra-ui/react";
 
 const Visualizer = ({ arrayBars, arraySize, colorMode }) => {

@@ -1,3 +1,7 @@
+/**
+ * Returns the final sorted positions and colors of the array.
+ */
+
 import cloneArrayOfObjects from "./cloneArrayOfObjects";
 
 const getEndArrayState = (array) => {

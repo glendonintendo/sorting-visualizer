@@ -1,3 +1,9 @@
+/**
+ * Renders popup menu to change data set options.
+ * Uses setBarHeights and setSortedOrder props to update barHeights
+ * and sortedOrder state in App component.
+ */
+
 import {
   Menu,
   MenuButton,
